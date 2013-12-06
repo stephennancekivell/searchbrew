@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Search Brew</title>
+    <link rel="stylesheet" media="screen" href="@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.css"))">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+
+    <style type="text/css">
+
+        body {
+        padding-top: 20px;
+        padding-bottom: 60px;
+        }
+
+        /* Custom container */
+        .container {
+        margin: 0 auto;
+        max-width: 1000px;
+        }
+        .container > hr {
+        margin: 60px 0;
+        }
+
+        /* Main marketing message and sign up button */
+        .jumbotron {
+        margin: 20px 0;
+        text-align: center;
+        }
+        .jumbotron h1 {
+        font-size: 100px;
+        line-height: 1;
+        }
+        .jumbotron .lead {
+        font-size: 24px;
+        line-height: 1.25;
+        }
+
+        .jumbotron .lead a {
+        text-decoration: underline;
+        color: inherit;
+        }
+
+        .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+        }
+
+        /* Supporting marketing content */
+        .marketing {
+        margin: 60px 0;
+        }
+        .marketing p + h4 {
+        margin-top: 28px;
+        }
+
+        #results {
+        text-align: center;
+        }
+
+        .result-name {
+        font-size:2em;
+        line-height:1.4
+        }
+
+    </style>
+
+    <script src="@routes.WebJarAssets.at(WebJarAssets.locate("angular.min.js"))"></script>
+    <script src="@routes.Assets.at("javascripts/app.js")"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-21860813-4', 'searchbrew.com');
+        ga('send', 'pageview');
+
+    </script>
+</head>
+<body ng-app="searchbrew">
+<div ng-controller="SearchCtrl" class="container">
+    <div class="jumbotron">
+        <h1>Search Brew</h1>
+        <p class="lead">The missing search for <a href="http://brew.sh">Homebrew</a></p>
+        <input type="text" class="input-xlarge search-query" ng-model="searchString"/>
+        <button ng-click="getAll()" class="btn-link">All</button>
+    </div>
+    <div id="results">
+        <div ng-show="results.hits.total==0"><p>No Results</p></div>
+        <div ng-show="loading"><p>loading</p></div>
+        <div ng-repeat="searchResult in results.hits.hits"
+             ng-init="doc = searchResult.fields">
+            <div>
+                <a ng-href="{{doc.homepage}}" target="_blank" class="result-name"><strong>{{doc.title}}</strong></a>
+            </div>
+            <p>{{doc.description}}</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
