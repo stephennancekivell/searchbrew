@@ -9,58 +9,95 @@
     <style type="text/css">
 
         body {
-        padding-top: 20px;
-        padding-bottom: 60px;
+
         }
 
         /* Custom container */
         .container {
-        margin: 0 auto;
-        max-width: 1000px;
+            margin: 0 auto;
+            max-width: 1000px;
         }
         .container > hr {
-        margin: 60px 0;
+            margin: 60px 0;
         }
 
         /* Main marketing message and sign up button */
         .jumbotron {
-        margin: 20px 0;
-        text-align: center;
+            margin: 20px 0;
+            text-align: center;
         }
         .jumbotron h1 {
-        font-size: 100px;
-        line-height: 1;
+            font-size: 100px;
+            line-height: 1;
         }
         .jumbotron .lead {
-        font-size: 24px;
-        line-height: 1.25;
+            font-size: 24px;
+            line-height: 1.25;
         }
 
         .jumbotron .lead a {
-        text-decoration: underline;
-        color: inherit;
+            text-decoration: underline;
+            color: inherit;
         }
 
         .jumbotron .btn {
-        font-size: 21px;
-        padding: 14px 24px;
+            font-size: 21px;
+            padding: 14px 24px;
         }
 
         /* Supporting marketing content */
         .marketing {
-        margin: 60px 0;
+            margin: 60px 0;
         }
         .marketing p + h4 {
-        margin-top: 28px;
+            margin-top: 28px;
         }
 
+        /* Sticky footer styles
+        -------------------------------------------------- */
+
+        html,
+        body {
+            height: 100%;
+            /* The html and body elements cannot have any padding or margin. */
+        }
+
+        /* Wrapper for page content to push down footer */
+        #wrap {
+            min-height: 100%;
+            height: auto !important;
+            height: 100%;
+            /* Negative indent footer by it's height */
+            margin: 0 auto -30px;
+        }
+
+        /* Set the fixed height of the footer here */
+        #push,
+        #footer {
+            height: 30px;
+        }
+        #footer {
+            background-color: #f5f5f5;
+        }
+
+        /* Lastly, apply responsive CSS fixes as necessary */
+        @@media (max-width: 767px) {
+            #footer {
+                margin-left: -20px;
+                margin-right: -20px;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        }
+
+
         #results {
-        text-align: center;
+            text-align: center;
         }
 
         .result-name {
-        font-size:2em;
-        line-height:1.4
+            font-size:2em;
+            line-height:1.4
         }
 
     </style>
@@ -79,24 +116,34 @@
     </script>
 </head>
 <body ng-app="searchbrew">
-<div ng-controller="SearchCtrl" class="container">
-    <div class="jumbotron">
-        <h1>Search Brew</h1>
-        <p class="lead">The missing search for <a href="http://brew.sh">Homebrew</a></p>
-        <input type="text" class="input-xlarge search-query" ng-model="searchString"/>
-        <button ng-click="getAll()" class="btn-link">All</button>
-    </div>
-    <div id="results">
-        <div ng-show="results.hits.total==0"><p>No Results</p></div>
-        <div ng-show="loading"><p>loading</p></div>
-        <div ng-repeat="searchResult in results.hits.hits"
-             ng-init="doc = searchResult.fields">
-            <div>
-                <a ng-href="{{doc.homepage}}" target="_blank" class="result-name"><strong>{{doc.title}}</strong></a>
+<div id="wrap">
+    <div ng-controller="SearchCtrl" class="container">
+        <div class="jumbotron">
+            <h1>Search Brew</h1>
+            <p class="lead">The missing search for <a href="http://brew.sh">Homebrew</a></p>
+            <input type="text" class="input-xlarge search-query" ng-model="searchString"/>
+            <button ng-click="getAll()" class="btn-link">All</button>
+        </div>
+        <div id="results">
+            <div ng-show="results.hits.total==0"><p>No Results</p></div>
+            <div ng-show="loading"><p>loading</p></div>
+            <div ng-repeat="searchResult in results.hits.hits"
+                 ng-init="doc = searchResult.fields">
+                <div>
+                    <a ng-href="{{doc.homepage}}" target="_blank" class="result-name"><strong>{{doc.title}}</strong></a>
+                </div>
+                <p>{{doc.description}}</p>
             </div>
-            <p>{{doc.description}}</p>
         </div>
     </div>
+    <div id="push"></div>
+
 </div>
+<div id="footer">
+    <div class="container">
+        <p class="text-muted">See on github: <a href="http://github.com/stephennancekivell/searchbrew" target="_blank">stephennancekivell/searchbrew</a></p>
+    </div>
+</div>
+
 </body>
 </html>
