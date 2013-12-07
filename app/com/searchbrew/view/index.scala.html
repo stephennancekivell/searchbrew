@@ -146,7 +146,7 @@
                     <td ng-if="showAll">{{doc.fields.homepage}}</td>
                 </tr>
             </table>
-            <div ng-show="searchResults.length==0 && searchQuery"><p>No Results</p></div>
+            <div ng-show="searchResults.length==0 && searchQuery.length > 0 && !loading"><p>No Results</p></div>
             <div ng-show="loading"><p>loading</p></div>
         </div>
 
