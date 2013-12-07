@@ -100,6 +100,14 @@
             line-height:1.4
         }
 
+        #footer div p {
+            display: inline;
+        }
+        #twitter-link {
+            margin-top:5px;
+            float:right;
+        }
+
     </style>
 
     <script src="@routes.WebJarAssets.at(WebJarAssets.locate("angular.min.js"))"></script>
@@ -157,6 +165,10 @@
 <div id="footer">
     <div class="container">
         <p class="text-muted">See on github: <a href="http://github.com/stephennancekivell/searchbrew" target="_blank">stephennancekivell/searchbrew</a></p>
+        <div id="twitter-link">
+            <a href="https://twitter.com/intent/tweet?button_hashtag=searchbrew&text=%40StephenNanceki" class="twitter-hashtag-button">Tweet #searchbrew</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        </div>
     </div>
 </div>
 
