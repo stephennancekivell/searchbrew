@@ -118,13 +118,13 @@
 <body ng-app="searchbrew">
 <div id="wrap">
     <div ng-controller="SearchCtrl" class="container">
-        <div class="jumbotron">
-            <h1>Search Brew</h1>
+        <div class="jumbotron" no-ng-hide="showAll">
+            <h1>Search Brew {{showAll}}</h1>
             <p class="lead">The missing search for <a href="http://brew.sh">Homebrew</a></p>
             <input type="text" class="input-xlarge search-query" ng-model="searchString"/>
             <button ng-click="getAll()" class="btn-link">All</button>
         </div>
-        <div id="results">
+        <div id="results" ng-if="!showAll">
             <div ng-show="results.hits.total==0"><p>No Results</p></div>
             <div ng-show="loading"><p>loading</p></div>
             <div ng-repeat="searchResult in results.hits.hits"
@@ -134,6 +134,29 @@
                 </div>
                 <p>{{doc.description}}</p>
             </div>
+        </div>
+        <div ng-if="showAll">
+            <table class="table table-hover">
+                <tr>
+                    <th></th>
+                    <th><a href=""
+                           ng-click="predicate='fields.title';reverse=!reverse">Name</a>
+                    </th>
+                    <th><a href=""
+                           ng-click="predicate='fields.description';reverse=!reverse">Description</a>
+                    </th>
+                    <th><a href=""
+                           ng-click="predicate='fields.homepage';reverse=!reverse">Homepage</a>
+                    </th>
+                </tr>
+
+                <tr ng-repeat="doc in searchResults |orderBy:predicate:reverse">
+                    <td>{{$index}}</td>
+                    <td>{{doc.fields.title}}</td>
+                    <td>{{doc.fields.description}}</td>
+                    <td><a ng-href="{{doc.fields.homepage}}">{{doc.fields.homepage}}</a></td>
+                </tr>
+            </table>
         </div>
     </div>
     <div id="push"></div>
