@@ -119,25 +119,15 @@
 <div id="wrap">
     <div ng-controller="SearchCtrl" class="container">
         <div class="jumbotron" no-ng-hide="showAll">
-            <h1>Search Brew {{showAll}}</h1>
+            <h1>Search Brew</h1>
             <p class="lead">The missing search for <a href="http://brew.sh">Homebrew</a></p>
-            <input type="text" class="input-xlarge search-query" ng-model="searchString"/>
+            <input type="text" class="input-xlarge search-query" ng-model="searchQuery"/>
             <button ng-click="getAll()" class="btn-link">All</button>
         </div>
-        <div id="results" ng-if="!showAll">
-            <div ng-show="results.hits.total==0"><p>No Results</p></div>
-            <div ng-show="loading"><p>loading</p></div>
-            <div ng-repeat="searchResult in results.hits.hits"
-                 ng-init="doc = searchResult.fields">
-                <div>
-                    <a ng-href="{{doc.homepage}}" target="_blank" class="result-name"><strong>{{doc.title}}</strong></a>
-                </div>
-                <p>{{doc.description}}</p>
-            </div>
-        </div>
-        <div ng-if="showAll">
+
+        <div>
             <table class="table table-hover">
-                <tr>
+                <tr ng-if="showAll">
                     <th></th>
                     <th><a href=""
                            ng-click="predicate='fields.title';reverse=!reverse">Name</a>
@@ -149,19 +139,21 @@
                            ng-click="predicate='fields.homepage';reverse=!reverse">Homepage</a>
                     </th>
                 </tr>
-
                 <tr ng-repeat="doc in searchResults |orderBy:predicate:reverse">
-                    <td>{{$index}}</td>
-                    <td>{{doc.fields.title}}</td>
+                    <td ng-if="showAll">{{$index}}</td>
+                    <td><a ng-href="{{doc.fields.homepage}}">{{doc.fields.title}}</a></td>
                     <td>{{doc.fields.description}}</td>
-                    <td><a ng-href="{{doc.fields.homepage}}">{{doc.fields.homepage}}</a></td>
+                    <td ng-if="showAll">{{doc.fields.homepage}}</td>
                 </tr>
             </table>
+            <div ng-show="searchResults.length==0 && searchQuery"><p>No Results</p></div>
+            <div ng-show="loading"><p>loading</p></div>
         </div>
+
     </div>
     <div id="push"></div>
-
 </div>
+
 <div id="footer">
     <div class="container">
         <p class="text-muted">See on github: <a href="http://github.com/stephennancekivell/searchbrew" target="_blank">stephennancekivell/searchbrew</a></p>
