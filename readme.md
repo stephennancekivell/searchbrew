@@ -20,4 +20,4 @@ Could Do
 * Error if no git command
 * Alert on no description, tool to add, open the pr for that brew-desc project.
 
-![screenshot](https://raw.github.com/stephennancekivell/searchbrew/master/sceenshot.png)
+![screenshot](https://raw.github.com/stephennancekivell/searchbrew/master/screenshot.png)
