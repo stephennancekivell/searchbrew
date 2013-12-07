@@ -29,10 +29,6 @@ class MainSearchActor extends Actor {
   val cancellable = context.system.scheduler.schedule(0 second, 12 hour, self, Tick)
 
   def receive = {
-    case formula: Formula => {
-      Logger.info("main got formula" + formula)
-      elasticSearchActor ! formula
-    }
     case Tick => {
       formulaProducerActor ! Tick
       formulaDescriptionActor ! Tick

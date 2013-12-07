@@ -11,25 +11,12 @@ class ElasticsearchActor extends Actor {
   import ExecutionContext.Implicits.global
 
   def receive = {
-    case f: Formula => index(f)
-    case fp: FormulaHomepage => indexPage(fp.title, fp.homepageText)
+    //case fp: FormulaHomepage => indexPage(fp.title, fp.homepageText)
     case descriptions: FormulaDescriptions => indexDescs(descriptions)
     case fl: FormulaList => index(fl)
   }
 
   val baseUrl = "http://localhost:9200"
-
-  def index(t: Formula) {
-    Logger.info("indexing "+t.title)
-    WS.url(s"$baseUrl/formula/formula/${t.title}/_update").post(
-      Json.obj(
-        "doc" -> Json.toJson(t)(Formula.format),
-        "doc_as_upsert" -> true
-      )).map {
-      response =>
-        Logger.info(s"index ${response.status} ${response.body}")
-    }
-  }
 
   def indexPage(title: String, homepageText: String) {
     Logger.info("indexing homepage "+title)

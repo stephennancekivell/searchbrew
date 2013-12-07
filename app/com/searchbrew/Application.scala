@@ -29,7 +29,11 @@ object Application extends Controller {
     val q = request.getQueryString("q").getOrElse("")
 
     val queryObj = q match {
-      case "" => Json.obj()
+      case "" => Json.obj(
+        "query" -> Json.obj(
+          "match_all" -> Json.obj()
+        )
+      )
       /*
      case q => Json.obj(
        "query" -> Json.obj(

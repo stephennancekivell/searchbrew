@@ -8,11 +8,10 @@ Built using, Play, Akka, AngularJS and Elasticsearch.
 
 TODO
 ----
-* about page. tech link to stephenn.com github
-* display all in table, sortable, make it easy to spot errors, find where empty. all columns (url)
 
 Could Do
 --------
+* clean data. alert on missing. provide tool to enter.
 * unit test. Will become important if I get traffic.
 * track deletions
 * dont always reindex on restart. reindex slowly.

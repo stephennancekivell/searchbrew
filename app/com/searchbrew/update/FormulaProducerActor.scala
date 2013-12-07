@@ -21,7 +21,6 @@ import play.libs.Akka
 
 class FormulaProducerActor extends Actor with GitRepoSupport {
 
-  def esActor = context.actorSelection("../elasticSearchActor")
   def fAggregator = context.actorSelection("../formulaAggregator")
 
   def receive =  {
@@ -30,13 +29,8 @@ class FormulaProducerActor extends Actor with GitRepoSupport {
       gitUpdate
       queueFiles
     }
-    case f: File => context.self ! fileToFormula(f)
-    case fp: FormulaHomepage => esActor ! fp
-    case f: Formula => {
-      fAggregator ! f // took 1 minute on searchbrew.com
-      //esActor ! f // took 2 minutes
-      //context.self ! getFormulaHomepage(f)
-    }
+    case f: File => fAggregator ! fileToFormula(f)
+    //case fp: FormulaHomepage => esActor ! fp
   }
 
   val repoName = "homebrew"
