@@ -13,6 +13,7 @@ TODO
 
 Could Do
 --------
+* get project descriptions from oEmbed or something. [1](http://oembed.com/) [2](http://embed.ly/)
 * clean data. alert on missing. provide tool to enter.
 * unit test. Will become important if I get traffic.
 * track deletions
