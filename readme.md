@@ -10,6 +10,7 @@ Descriptions from [telemachus/homebrew-desc](http://github.com/telemachus/homebr
 
 TODO
 ----
+* how many websites have description meta tag.
 
 Could Do
 --------
