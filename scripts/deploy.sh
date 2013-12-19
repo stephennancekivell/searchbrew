@@ -10,7 +10,7 @@ APACHE_CONF=searchbrew.com
 USER=searchbrew
 
 cd $SCRIPT_DIR/..
-#play compile stage
+play compile stage
 
 ssh $SERVER sudo service $SERVICE stop
 
