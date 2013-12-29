@@ -19,9 +19,9 @@ ssh $USER@$SERVER <<EOF
 	mkdir -p $TARGET/git.repo
 	mkdir -p $TARGET/elasticsearch-data
 	mkdir -p $TARGET/dist/stage
-	ln -s $TARGET/logs $TARGET/dist/stage/logs
-	ln -s $TARGET/git.repo $TARGET/dist/stage/git.repo
-	ln -s $TARGET/elasticsearch-data $TARGET/dist/stage/elasticsearch-data
+	ln -s $TARGET/logs $TARGET/dist/stage
+	ln -s $TARGET/git.repo $TARGET/dist/stage
+	ln -s $TARGET/elasticsearch-data $TARGET/dist/stage
 EOF
 
 rsync -v --recursive --delete --compress $SCRIPT_DIR/../target/universal/stage $USER@$SERVER:/$TARGET/dist/
