@@ -85,7 +85,7 @@ object Application extends Controller {
       "fields" -> Json.arr("filename", "title", "homepage", "description")
     )
 
-    Logger.debug("query "+fq)
+    Logger.info("query "+fq)
 
     WS.url("http://localhost:9200/formula/formula/_search").post(fq).map {
       response =>
