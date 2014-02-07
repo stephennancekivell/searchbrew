@@ -8,4 +8,6 @@ ssh searchbrew.com /bin/sh << EOF
 		tr -s ' ' '\t'
 	echo "\nError"
 	tail -n 5 /var/log/apache2/searchbrew.com.error.log
+	echo "\nThreads #45"
+	ps uH p 18139 | wc -l
 EOF
