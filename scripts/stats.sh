@@ -9,5 +9,5 @@ ssh searchbrew.com /bin/sh << EOF
 	echo "\nError"
 	tail -n 5 /var/log/apache2/searchbrew.com.error.log
 	echo "\nThreads #45"
-	ps uH p 18139 | wc -l
+	ps uH p 24670 | wc -l
 EOF
