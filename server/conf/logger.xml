@@ -3,7 +3,7 @@
   <conversionRule conversionWord="coloredLevel" converterClass="play.api.Logger$ColoredLevel" />
   
   <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-     <file>${application.home}/logs/application.log</file>
+     <file>${application.home}/logs/server.log</file>
      <encoder>
        <pattern>%date - %coloredLevel %logger{15} - %message%n%xException{5}</pattern>
      </encoder>

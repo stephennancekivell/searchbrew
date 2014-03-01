@@ -1,5 +1,5 @@
 <VirtualHost *:80>
-    ServerName searchbrew.com
+    ServerName new.searchbrew.com
     ServerAdmin webmaster@localhost
     RewriteEngine on
 
