@@ -18,8 +18,6 @@ import play.api.libs.json._
 
 object Application extends Controller {
 
-  val searchActor = Akka.system.actorOf(Props[MainSearchActor])
-
   def index = Action {
     Ok(com.searchbrew.view.html.index())
   }

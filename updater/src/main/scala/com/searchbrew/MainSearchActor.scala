@@ -4,13 +4,13 @@ import akka.actor.{Props, Actor}
 import play.api.libs.iteratee.{Concurrent}
 import scala.collection.mutable.HashMap
 import java.util.UUID
-import play.api.libs.json.JsValue
 
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext
 
-import play.Logger
 import com.searchbrew.update._
+import play.api.libs.json.JsValue
+import play.api.Logger
 
 case object Tick
 

@@ -3,7 +3,6 @@ name := "searchbrew"
 version := "1.0-SNAPSHOT"
 
 libraryDependencies ++= Seq(
-  "org.elasticsearch" % "elasticsearch" % "0.90.7",
   "org.webjars" %% "webjars-play" % "2.2.1",
   "org.webjars" % "angularjs" % "1.1.5-1",
   "org.webjars" % "bootstrap" % "2.3.2",

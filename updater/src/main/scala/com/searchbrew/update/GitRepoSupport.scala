@@ -1,9 +1,8 @@
 package com.searchbrew.update
 
 import java.io.File
-import play.api.{Logger, Play}
 import scala.sys.process.Process
-import play.api.Play.current
+import play.{Logger, Play}
 
 trait GitRepoSupport {
 
