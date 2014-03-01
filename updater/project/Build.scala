@@ -1,7 +1,7 @@
 import sbt._
 import Keys._
 import akka.sbt.AkkaKernelPlugin
-import akka.sbt.AkkaKernelPlugin.{ Dist, outputDirectory, distJvmOptions}
+import akka.sbt.AkkaKernelPlugin.{ Dist, outputDirectory, distJvmOptions, distMainClass, additionalLibs}
  
 object SearchbrewUpdaterBuild extends Build {
   val Version      = "2.2.3"
@@ -11,9 +11,10 @@ object SearchbrewUpdaterBuild extends Build {
     id = "searchbrew-updater",
     base = file("."),
     settings = buildSettings ++ AkkaKernelPlugin.distSettings ++ Seq(
-      // libraryDependencies ++= Dependencies.helloKernel,
       distJvmOptions in Dist := "-Xms256M -Xmx1024M",
-      outputDirectory in Dist := file("target/dist")
+      outputDirectory in Dist := file("target/dist"),
+      distMainClass in Dist := "MainApp",
+      additionalLibs in Dist := Seq(new java.io.File("target/dist/deploy/searchbrew-updater_2.10-1.0-SNAPSHOT.jar"))
     )
   )
 

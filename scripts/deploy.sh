@@ -16,11 +16,11 @@ ES_FILE=elasticsearch-1.0.1.deb
 echo $SCRIPT_DIR
 
 cd $SCRIPT_DIR/../server
-#sbt stage
+sbt stage
 cd ..
 
 cd $SCRIPT_DIR/../updater
-#sbt dist
+sbt dist
 cd ..
 
 
