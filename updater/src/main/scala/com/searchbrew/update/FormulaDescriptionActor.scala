@@ -1,7 +1,7 @@
 package com.searchbrew.update
 
 import java.io.File
-import akka.actor.Actor
+import akka.actor.{Props, Actor}
 import play.api.{Logger, Play}
 import play.api.Play.current
 import scala.sys.process.Process
@@ -16,7 +16,10 @@ class FormulaDescriptionActor extends Actor with GitRepoSupport {
   def receive = {
     case Tick => {
       gitUpdate
-      esActor ! getDescs
+      val decs = getDescs
+      esActor ! decs
+
+      this.sender ! "done FormulaDescription"
     }
   }
 

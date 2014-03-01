@@ -11,7 +11,6 @@ object SearchbrewUpdaterBuild extends Build {
     id = "searchbrew-updater",
     base = file("."),
     settings = buildSettings ++ AkkaKernelPlugin.distSettings ++ Seq(
-      distJvmOptions in Dist := "-Xms256M -Xmx1024M",
       outputDirectory in Dist := file("target/dist"),
       distMainClass in Dist := "MainApp",
       additionalLibs in Dist := Seq(new java.io.File("target/dist/deploy/searchbrew-updater_2.10-1.0-SNAPSHOT.jar"))

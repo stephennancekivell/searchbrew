@@ -149,9 +149,9 @@
                 </tr>
                 <tr ng-repeat="doc in searchResults |orderBy:predicate:reverse">
                     <td ng-if="showAll">{{$index}}</td>
-                    <td><a ng-href="{{doc.fields.homepage}}">{{doc.fields.title}}</a></td>
-                    <td>{{doc.fields.description}}</td>
-                    <td ng-if="showAll">{{doc.fields.homepage}}</td>
+                    <td><a ng-href="{{doc.fields.homepage[0]}}">{{doc.fields.title[0]}}</a></td>
+                    <td>{{doc.fields.description[0]}}</td>
+                    <td ng-if="showAll">{{doc.fields.homepage[0]}}</td>
                 </tr>
             </table>
             <div ng-show="searchResults.length==0 && searchQuery.length > 0 && !loading"><p>No Results</p></div>

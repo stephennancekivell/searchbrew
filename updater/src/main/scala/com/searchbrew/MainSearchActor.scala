@@ -30,8 +30,10 @@ class MainSearchActor extends Actor {
 
   def receive = {
     case Tick => {
-      formulaProducerActor ! Tick
       formulaDescriptionActor ! Tick
+    }
+    case "done FormulaDescription" => {
+      formulaProducerActor ! Tick
     }
   }
 

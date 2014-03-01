@@ -30,7 +30,7 @@ ssh $SERVER <<EOF
 
 	# install required
 	# sudo add-apt-repository ppa:webupd8team/java
-	sudo apt-get -y install apache2 unattended-upgrades oracle-java7-installer oracle-java7-set-default
+	sudo apt-get -y install apache2 unattended-upgrades oracle-java7-installer oracle-java7-set-default git
 	sudo a2enmod proxy_http
 	sudo a2enmod rewrite
 

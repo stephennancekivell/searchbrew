@@ -15,13 +15,13 @@ trait GitRepoSupport {
 
   def gitUpdate {
     val output = if (!new File(repoDir, repoName).exists()){
-      Logger.info("cloning repo ...")
+      Logger.info(s"cloning repo $repoName")
       Process(Seq("git", "clone", repoUrl), repoDir).!!
     } else {
       Logger.info("repo already exists, not cloning")
       Process(Seq("git", "pull"), new File(repoDir, repoName)).!!
     }
 
-    Logger.info(s"git $output")
+    Logger.info(s"git $repoName $output")
   }
 }
