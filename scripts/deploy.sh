@@ -2,7 +2,7 @@
 
 SCRIPT_DIR=`dirname $0`
 
-SERVER=new.searchbrew.com
+SERVER=searchbrew.com
 TARGET=/home/searchbrew
 SERVICE_SERVER=searchbrew
 SERVICE_UPDATER=searchbrew.updater
