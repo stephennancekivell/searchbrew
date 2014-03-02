@@ -13,8 +13,6 @@ USER=searchbrew
 ES_DOWNLOAD=https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.0.1.deb
 ES_FILE=elasticsearch-1.0.1.deb
 
-echo $SCRIPT_DIR
-
 cd $SCRIPT_DIR/../server
 sbt clean stage
 cd ..
@@ -22,7 +20,6 @@ cd ..
 cd $SCRIPT_DIR/../updater
 sbt clean dist
 cd ..
-
 
 ssh $SERVER <<EOF
 	sudo service $SERVICE_SERVER stop
