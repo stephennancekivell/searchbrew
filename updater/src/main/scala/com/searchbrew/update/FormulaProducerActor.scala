@@ -37,7 +37,9 @@ class FormulaProducerActor extends Actor with GitRepoSupport {
   val repoUrl = "https://github.com/mxcl/homebrew.git"
 
   def queueFiles = {
-    new File(repoDir, "homebrew/Library/Formula").listFiles().foreach(f =>  context.self ! f)
+    val files = new File(repoDir, "homebrew/Library/Formula").listFiles()
+    Logger.info(s"$repoName found ${files.length} files")
+    files.foreach(f =>  context.self ! f)
   }
 
   def fileToFormula(file: File) = {

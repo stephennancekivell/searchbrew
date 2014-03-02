@@ -16,11 +16,11 @@ ES_FILE=elasticsearch-1.0.1.deb
 echo $SCRIPT_DIR
 
 cd $SCRIPT_DIR/../server
-sbt stage
+sbt clean stage
 cd ..
 
 cd $SCRIPT_DIR/../updater
-sbt dist
+sbt clean dist
 cd ..
 
 
@@ -30,7 +30,7 @@ ssh $SERVER <<EOF
 
 	# install required
 	# sudo add-apt-repository ppa:webupd8team/java
-	sudo apt-get -y install apache2 unattended-upgrades oracle-java7-installer oracle-java7-set-default git
+	sudo apt-get -y install apache2 unattended-upgrades oracle-java7-installer oracle-java7-set-default git xserver-xorg
 	sudo a2enmod proxy_http
 	sudo a2enmod rewrite
 
