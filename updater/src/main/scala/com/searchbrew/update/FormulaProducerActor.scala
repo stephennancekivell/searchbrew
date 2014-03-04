@@ -25,7 +25,7 @@ class FormulaProducerActor extends Actor with GitRepoSupport {
 
   def receive =  {
     case Tick => {
-      Logger.info("TickOnce")
+      Logger.info("FormulaProducerActor TickOnce")
       gitUpdate
       queueFiles
     }

@@ -33,6 +33,7 @@ class MainSearchActor extends Actor {
       formulaDescriptionActor ! Tick
     }
     case "done FormulaDescription" => {
+      Logger.info("done FormulaDescription")
       formulaProducerActor ! Tick
     }
   }
