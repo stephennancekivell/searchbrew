@@ -42,9 +42,6 @@ ssh $USER@$SERVER <<EOF
 	mkdir -p $TARGET/git.repo
 	mkdir -p $TARGET/server/dist
 	mkdir -p $TARGET/updater/dist
-	ln -s $TARGET/logs $TARGET/server/dist
-	ln -s $TARGET/logs $TARGET/updater/dist
-	ln -s $TARGET/git.repo $TARGET/updater/dist
 EOF
 
 rsync -v --recursive --delete --compress $SCRIPT_DIR/../server/target/universal/stage/ $USER@$SERVER:/$TARGET/server/dist/
@@ -52,8 +49,8 @@ rsync -v --recursive --delete --compress $SCRIPT_DIR/../updater/target/dist/ $US
 
 ssh $USER@$SERVER <<EOF
 	ln -s $TARGET/logs $TARGET/server/dist
-	ln -s $TARGET/logs $TARGET/updater/dist
-	ln -s $TARGET/git.repo $TARGET/updater/dist
+	ln -s $TARGET/logs $TARGET/updater
+	ln -s $TARGET/git.repo $TARGET/updater
 EOF
 
 scp $SCRIPT_DIR/$INIT_SERVER_CONF $SERVER:.
