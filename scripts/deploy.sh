@@ -14,7 +14,7 @@ ES_DOWNLOAD=https://download.elasticsearch.org/elasticsearch/elasticsearch/elast
 ES_FILE=elasticsearch-1.0.1.deb
 
 cd $SCRIPT_DIR/../server
-#sbt clean stage
+sbt clean stage
 cd ..
 
 cd $SCRIPT_DIR/../updater
@@ -34,6 +34,7 @@ ssh $SERVER <<EOF
 	if [ ! -f $ES_FILE ]; then
 		wget $ES_DOWNLOAD
 		sudo dpkg -i $ES_FILE
+		sudo update-rc.d elasticsearch defaults
 	fi
 EOF
 
