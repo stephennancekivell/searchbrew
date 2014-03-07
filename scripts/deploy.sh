@@ -14,7 +14,7 @@ ES_DOWNLOAD=https://download.elasticsearch.org/elasticsearch/elasticsearch/elast
 ES_FILE=elasticsearch-1.0.1.deb
 
 cd $SCRIPT_DIR/../server
-sbt clean stage
+#sbt clean stage
 cd ..
 
 cd $SCRIPT_DIR/../updater

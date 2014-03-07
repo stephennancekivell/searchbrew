@@ -43,7 +43,7 @@ class FormulaProducerActor extends Actor with GitRepoSupport {
   }
 
   def fileToFormula(file: File) = {
-    val source = Source.fromFile(file)
+    val source = Source.fromFile(file)("UTF8")
     val lines = source.getLines().toList
     val name = file.getName.replaceFirst(".rb$", "")
     val homepage = lines.find(line => line.trim.startsWith("homepage")).map(line => {
