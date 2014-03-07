@@ -1,6 +1,6 @@
 
 import akka.actor.Props
-import com.searchbrew._
+import com.searchbrew.MainSearchActor
 import java.io.File
 import play.core.StaticApplication
 import play.libs.Akka

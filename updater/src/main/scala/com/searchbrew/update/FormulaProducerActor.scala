@@ -8,8 +8,8 @@ import play.api.libs.json._
 
 import java.io.File
 import com.searchbrew._
+import com.searchbrew.Tick
 
-//import org.apache.commons.io.FileUtils
 import play.api._
 
 import play.api.Play.current
@@ -30,7 +30,6 @@ class FormulaProducerActor extends Actor with GitRepoSupport {
       queueFiles
     }
     case f: File => fAggregator ! fileToFormula(f)
-    //case fp: FormulaHomepage => esActor ! fp
   }
 
   val repoName = "homebrew"
@@ -52,15 +51,4 @@ class FormulaProducerActor extends Actor with GitRepoSupport {
     source.close()
     Formula(file.getName, name, homepage.get)
   }
-
-  //  def getFormulaHomepage(f: Formula){
-  //    import ExecutionContext.Implicits.global
-  //
-  //    Logger.info("getHomepage "+f.title)
-  //
-  //    WS.url(f.homepage).get().map { response =>
-  //      Logger.info("gotHomepage "+f)
-  //      context.self ! FormulaHomepage(f.title, Jsoup.parse(response.body).text)
-  //    }
-  //  }
 }

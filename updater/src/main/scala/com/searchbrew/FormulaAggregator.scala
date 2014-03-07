@@ -7,11 +7,12 @@ import akka.contrib.pattern._
 import play.Logger
 import collection.mutable.ArrayBuffer
 import akka.contrib.pattern.Aggregator
+import com.searchbrew.FormulaList
+
+case object TimedOut
 
 class FormulaAggregator extends Actor with Aggregator  {
   import context.dispatcher
-
-  case object TimedOut
 
   val maxBatchSize = 1000
 
@@ -19,19 +20,36 @@ class FormulaAggregator extends Actor with Aggregator  {
 
   def esActor = context.actorSelection("../elasticSearchActor")
 
-  context.system.scheduler.scheduleOnce(5.seconds, self, TimedOut)
+  var cancel: Option[Cancellable] = None
 
   Logger.info("FormulaAggregator created")
 
+  def timeout {
+    def make {
+      cancel = Some(context.system.scheduler.scheduleOnce(5.seconds, self, TimedOut))
+    }
+    cancel match {
+      case None => make
+      case Some(cancellable) => {
+        cancellable.cancel()
+        make
+      }
+    }
+  }
+
   val handle = expect {
     case f: Formula ⇒
+      timeout
       values += f
       if (values.size >= maxBatchSize) processList
-    case TimedOut ⇒ processList
+    case TimedOut ⇒ {
+      Logger.info("Formula Aggregator TimeOut")
+      processList
+    }
   }
 
   def processList {
-    Logger.info("processList")
+    Logger.info("FormulaAggregator processList")
     val list = values.toList
     values.clear
     if (list.nonEmpty) esActor ! FormulaList(list)

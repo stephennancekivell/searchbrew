@@ -7,11 +7,12 @@ import java.util.{Date, UUID}
 import scala.concurrent.ExecutionContext
 import play.Logger
 
+import com.searchbrew.{FormulaList, FormulaDescriptions}
+
 class ElasticsearchActor extends Actor {
   import ExecutionContext.Implicits.global
 
   def receive = {
-    //case fp: FormulaHomepage => indexPage(fp.title, fp.homepageText)
     case descriptions: FormulaDescriptions => indexDescs(descriptions)
     case fl: FormulaList => index(fl)
   }
@@ -40,7 +41,7 @@ class ElasticsearchActor extends Actor {
       """
     }.mkString("")
 
-    bulkIndex(js, "FormulaList")
+    bulkIndex(js, s"bulk indexing ${fl.list.length} FormulaList")
   }
 
   def indexDescs(descriptions: FormulaDescriptions) {
@@ -50,7 +51,7 @@ class ElasticsearchActor extends Actor {
       """
     }.mkString("")
 
-    bulkIndex(js, "FormulaDescriptions")
+    bulkIndex(js, s"bulk indexing ${descriptions.list.length} FormulaDescriptions")
   }
 
   def bulkIndex(data: String, action: String) {
