@@ -17,4 +17,5 @@ ssh searchbrew.com /bin/sh << EOF
 
 	service searchbrew status
 	service searchbrew.updater status
+	sudo service elasticsearch status
 EOF
