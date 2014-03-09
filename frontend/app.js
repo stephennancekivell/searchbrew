@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('searchbrew', []);
+var app = angular.module('searchbrew', ['pasvaz.bindonce']);
 
 app.controller('SearchCtrl', function ($scope, $http, $timeout) {
         $scope.showAll = false;
@@ -33,7 +33,7 @@ app.controller('SearchCtrl', function ($scope, $http, $timeout) {
             $scope.showAll = true;
             $scope.searchQuery = "";
             $scope.loading = true;
-            $http.get('/search?size=10000').
+            $http.get('/api/search?size=10000').
                 success(function(data){
                     $scope.loading = false;
                     $scope.searchResults = data.hits.hits;
