@@ -26,7 +26,7 @@ class MainSearchActor extends Actor {
   val formulaDescriptionActor = context.system.actorOf(Props[FormulaDescriptionActor], "formulaDescriptionActor")
   val fAggregator = context.system.actorOf(Props[FormulaAggregator], "formulaAggregator")
 
-  val cancellable = context.system.scheduler.schedule(0 second, 12 hour, self, Tick)
+  val cancellable = context.system.scheduler.schedule(0 second, 1 hour, self, Tick)
 
   def receive = {
     case Tick => {
