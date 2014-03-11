@@ -14,7 +14,7 @@ object SearchbrewUpdaterBuild extends Build {
       outputDirectory in Dist := file("target/dist"),
       distMainClass in Dist := "MainApp",
       additionalLibs in Dist := Seq(new java.io.File("target/dist/deploy/searchbrew-updater_2.10-1.0-SNAPSHOT.jar")),
-      distJvmOptions in Dist := "-Xms128M -Xmx128M"
+      distJvmOptions in Dist := "-Xms32M -Xmx32M"
     )
   )
 
