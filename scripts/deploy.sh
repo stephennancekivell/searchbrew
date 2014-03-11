@@ -34,6 +34,7 @@ ssh $SERVER <<EOF
 	if [ ! -f $ES_FILE ]; then
 		wget $ES_DOWNLOAD
 		sudo dpkg -i $ES_FILE
+		echo "ES_HEAP_SIZE=256m" >> /etc/default/elasticsearch
 		sudo update-rc.d elasticsearch defaults
 	fi
 EOF
