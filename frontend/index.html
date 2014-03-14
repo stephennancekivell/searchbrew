@@ -111,7 +111,6 @@
     </style>
 
     <script src="bower_components/angular/angular.min.js"></script>
-    <script src="bower_components/angular-bindonce/bindonce.min.js"></script>
     <script src="app.js"></script>
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -136,23 +135,17 @@
 
         <div>
             <table class="table table-hover">
-                <tr ng-if="showAll">
-                    <th></th>
+                <tr>
                     <th><a href=""
                            ng-click="predicate='fields.title';reverse=!reverse">Name</a>
                     </th>
                     <th><a href=""
                            ng-click="predicate='fields.description';reverse=!reverse">Description</a>
                     </th>
-                    <th><a href=""
-                           ng-click="predicate='fields.homepage';reverse=!reverse">Homepage</a>
-                    </th>
                 </tr>
-                <tr bindonce ng-repeat="doc in searchResults |orderBy:predicate:reverse">
-                    <td ng-if="showAll" bo-text="$index"></td>
-                    <td><a bo-href="doc.fields.homepage[0]" bo-text="doc.fields.title[0]"></a></td>
-                    <td bo-text="doc.fields.description[0]"></td>
-                    <td ng-if="showAll" bo-text="doc.fields.homepage[0]"></td>
+                <tr ng-repeat="doc in searchResults |orderBy:predicate:reverse">
+                    <td><a ng-href="{{doc.fields.homepage[0]}}">{{doc.fields.title[0]}}</a></td>
+                    <td>{{doc.fields.description[0]}}</td>
                 </tr>
             </table>
             <div ng-show="searchResults.length==0 && searchQuery.length > 0 && !loading"><p>No Results</p></div>

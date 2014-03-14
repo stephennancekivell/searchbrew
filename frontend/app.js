@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('searchbrew', ['pasvaz.bindonce']);
+var app = angular.module('searchbrew', []);
 
 app.controller('SearchCtrl', function ($scope, $http, $timeout) {
         $scope.showAll = false;
