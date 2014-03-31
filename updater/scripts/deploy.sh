@@ -15,7 +15,7 @@ ssh $SERVER <<EOF
 	sudo service $SERVICE_UPDATER stop
 
 	# install required
-	# sudo add-apt-repository ppa:webupd8team/java
+	sudo add-apt-repository ppa:webupd8team/java
 	sudo apt-get -y install unattended-upgrades oracle-java7-installer oracle-java7-set-default git
 EOF
 

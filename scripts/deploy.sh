@@ -8,8 +8,8 @@ SERVICE_SERVER=searchbrew
 INIT_SERVER_CONF=searchbrew.conf
 APACHE_CONF=searchbrew.com
 USER=searchbrew
-ES_DOWNLOAD=https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.0.1.deb
-ES_FILE=elasticsearch-1.0.1.deb
+ES_DOWNLOAD=https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.1.0.deb
+ES_FILE=elasticsearch-1.1.0.deb
 
 cd $SCRIPT_DIR/../server
 sbt clean stage
@@ -18,9 +18,15 @@ cd ..
 ssh $SERVER <<EOF
 	sudo service $SERVICE_SERVER stop
 
+	# if [ ! -f $TARGET ]; then
+	# 	sudo adduser $USER
+	# fi
+
 	# install required
-	# sudo add-apt-repository ppa:webupd8team/java
-	sudo apt-get -y install apache2 unattended-upgrades oracle-java7-installer oracle-java7-set-default git xserver-xorg
+	#sudo add-apt-repository ppa:webupd8team/java
+	#sudo apt-get update
+	sudo apt-get -y install apache2 unattended-upgrades oracle-java7-installer oracle-java7-set-default git
+
 	sudo a2enmod proxy_http
 	sudo a2enmod rewrite
 

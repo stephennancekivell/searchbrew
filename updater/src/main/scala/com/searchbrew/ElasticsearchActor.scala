@@ -7,8 +7,6 @@ import java.util.{Date, UUID}
 import scala.concurrent.ExecutionContext
 import play.Logger
 
-import com.searchbrew.{FormulaList, FormulaDescriptions}
-
 class ElasticsearchActor extends Actor {
   import ExecutionContext.Implicits.global
 

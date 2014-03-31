@@ -7,7 +7,6 @@ import akka.contrib.pattern._
 import play.Logger
 import collection.mutable.ArrayBuffer
 import akka.contrib.pattern.Aggregator
-import com.searchbrew.FormulaList
 
 case object TimedOut
 
