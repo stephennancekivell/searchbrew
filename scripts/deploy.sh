@@ -8,8 +8,8 @@ SERVICE_SERVER=searchbrew
 INIT_SERVER_CONF=searchbrew.conf
 APACHE_CONF=searchbrew.com
 USER=searchbrew
-ES_DOWNLOAD=https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.1.0.deb
-ES_FILE=elasticsearch-1.1.0.deb
+ES_DOWNLOAD=https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.1.2.deb
+ES_FILE=elasticsearch-1.1.2.deb
 
 cd $SCRIPT_DIR/../server
 sbt clean stage
