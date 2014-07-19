@@ -17,3 +17,5 @@ libraryDependencies ++= Seq(
 )
 
 unmanagedSourceDirectories in Compile += baseDirectory.value / "src" / "main" / "scala"
+
+unmanagedSourceDirectories in Test += baseDirectory.value / "src" / "test" / "scala"

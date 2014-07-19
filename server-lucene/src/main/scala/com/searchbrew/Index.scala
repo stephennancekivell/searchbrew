@@ -56,11 +56,12 @@ object Index {
   }
 
   def updateDoc(title: String, doc: Document, writer: IndexWriter): Unit = {
-    writer.updateDocument(new Term("title", title), doc)
+    writer.updateDocument(new Term("id", title), doc)
   }
 
   def findByTitle(title: String): Option[Formula] = {
-    val q = new QueryParser(Version.LUCENE_4_9, "title", analyzer).parse(s"""(title:$title)""")
+    val q = new PhraseQuery()
+    q.add(new Term("id", title))
 
     runQuery(q).headOption.map {
       docToFormula
@@ -80,6 +81,8 @@ object Index {
 
   def formulaToDocument(formula: Formula): Document = {
     val doc = new Document()
+    doc.add(new StringField("id", formula.title, Field.Store.YES))
+
     doc.add(new TextField("title", formula.title, Field.Store.YES))
 
     formula.homepage.map { homepage =>

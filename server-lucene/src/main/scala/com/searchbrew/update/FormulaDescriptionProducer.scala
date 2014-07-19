@@ -33,7 +33,7 @@ object FormulaDescriptionProducer extends GitRepoSupport {
       }
     sc.close()
 
-    Logger.info(s"getDescs ${descs.take(5)}")
+    Logger.info(s"getDescs  ${descs.length}")
     descs
   }
 }

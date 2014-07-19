@@ -34,9 +34,10 @@ object FormulaHomepageProducer extends GitRepoSupport {
     val lines = source.getLines().toList
     val name = file.getName.replaceFirst(".rb$", "")
     val homepage = lines.find(line => line.trim.startsWith("homepage")).map(line => {
-      line.replaceFirst("homepage", "").trim.split(" ")(0).replace("'", "")
+      line.replaceFirst("homepage", "").trim.split(" ")(0).replace("'", "").replace(""""""", "")
     })
     source.close()
+
     Formula(name, homepage = homepage)
   }
 }
