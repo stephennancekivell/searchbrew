@@ -3,14 +3,10 @@
 # ~~~~
 
 # Home page
-GET     /                           com.searchbrew.Application.index
+GET     /                           controllers.Assets.at(path="/public", file="/index.html")
+GET     /main.js                    controllers.Assets.at(path="/public", file="/main.js")
 
-GET     /docs                       com.searchbrew.Application.search(q: Option[String])
 GET     /search                     com.searchbrew.Application.search(q: Option[String])
-
-GET     /indexhomepage              com.searchbrew.Application.indexHomepage()
-GET     /indexdescriptions          com.searchbrew.Application.indexDescriptions()
-
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

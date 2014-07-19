@@ -33,7 +33,7 @@ app.controller('SearchCtrl', function ($scope, $http, $timeout) {
     $scope.showAll = true;
     $scope.searchQuery = "";
     $scope.loading = true;
-    $http.get('/search?size=10000').
+    $http.get('/search').
       success(function(data){
         $scope.loading = false;
         $scope.searchResults = data.data;
