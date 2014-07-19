@@ -8,8 +8,6 @@ SERVICE_SERVER=searchbrew
 INIT_SERVER_CONF=searchbrew.conf
 APACHE_CONF=searchbrew.com
 USER=searchbrew
-ES_DOWNLOAD=https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.1.2.deb
-ES_FILE=elasticsearch-1.1.2.deb
 
 cd $SCRIPT_DIR/../server
 sbt clean stage
@@ -18,25 +16,17 @@ cd ..
 ssh $SERVER <<EOF
 	sudo service $SERVICE_SERVER stop
 
-	# if [ ! -f $TARGET ]; then
-	# 	sudo adduser $USER
-	# fi
+	if [ ! -f $TARGET ]; then
+		sudo adduser $USER
+	fi
 
 	# install required
-	#sudo add-apt-repository ppa:webupd8team/java
-	#sudo apt-get update
+	sudo add-apt-repository ppa:webupd8team/java
+	sudo apt-get update
 	sudo apt-get -y install apache2 unattended-upgrades oracle-java7-installer oracle-java7-set-default git
 
 	sudo a2enmod proxy_http
 	sudo a2enmod rewrite
-
-	if [ ! -f $ES_FILE ]; then
-		wget $ES_DOWNLOAD
-		sudo dpkg -i $ES_FILE
-		sudo sh -c "echo 'ES_HEAP_SIZE=256m' >> /etc/default/elasticsearch"
-
-		sudo update-rc.d elasticsearch defaults
-	fi
 EOF
 
 ssh $USER@$SERVER <<EOF
@@ -58,6 +48,5 @@ ssh $SERVER <<EOF
 	sudo mv $APACHE_CONF /etc/apache2/sites-available
 	sudo a2ensite $APACHE_CONF
 	sudo service apache2 reload
-	sudo service elasticsearch start
 	sudo service $SERVICE_SERVER start
 EOF

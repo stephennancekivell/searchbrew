@@ -1,4 +1,4 @@
-name := """server-lucene"""
+name := """searchbrew"""
 
 version := "1.0-SNAPSHOT"
 
