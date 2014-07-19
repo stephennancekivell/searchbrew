@@ -1,8 +1,0 @@
-{
-  "name": "searchbrew-ui",
-  "dependencies": {
-    "angular": "1.2.14",
-    "bootstrap": "2.3.2",
-    "angular-bindonce": "~0.3.1"
-  }
-}

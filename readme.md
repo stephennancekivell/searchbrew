@@ -3,8 +3,6 @@
 
 The missing search for homebrew.
 
-Built using, Play, Akka, AngularJS and Elasticsearch. 
-
 Descriptions from [telemachus/homebrew-desc](http://github.com/telemachus/homebrew-desc)
 
 
