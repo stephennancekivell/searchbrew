@@ -51,7 +51,7 @@ object Index {
     formulas.foreach {f =>
       updateDoc(f.title, formulaToDocument(f), writer)
     }
-    
+
     writer.close
   }
 

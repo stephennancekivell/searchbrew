@@ -12,12 +12,17 @@ object Application extends Controller {
     Ok("bla")
   }
 
+  indexBoth
+
   implicit val fdWrites = Json.writes[Formula]
 
   def search(q: Option[String]) = Action {
     Ok(
-      Json.toJson(
-        Index.query(q)
+      Json.obj(
+        "query" -> q,
+        "data" -> Json.toJson(
+          Index.query(q)
+        )
       )
     )
   }
@@ -30,6 +35,11 @@ object Application extends Controller {
   def indexDescriptions() = Action {
     Index.insertDescriptions(FormulaDescriptionProducer.doit())
     Ok
+  }
+
+  def indexBoth {
+    Index.insertHomepages(FormulaHomepageProducer.doit())
+    Index.insertDescriptions(FormulaDescriptionProducer.doit())
   }
 
 }
