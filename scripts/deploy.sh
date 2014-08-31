@@ -8,7 +8,8 @@ SERVICE_SERVER=searchbrew
 INIT_SERVER_CONF=searchbrew.conf
 APACHE_CONF=searchbrew.com.conf
 USER=searchbrew
-NEWRELIC_PKG=newrelic-java-3.7.2.zip
+NEWRELIC_PKG=newrelic-java-3.10.0.zip
+NEWRELIC_LICENSE_KEY=`cat $SCRIPT_DIR/newrelic.license.key`
 
 cd $SCRIPT_DIR/../server
 #sbt clean stage
@@ -27,7 +28,7 @@ ssh $SERVER <<EOF
 
 	# install required
 	sudo add-apt-repository ppa:webupd8team/java
-	#sudo apt-get update
+	sudo apt-get update
 	sudo apt-get -y install apache2 unattended-upgrades oracle-java7-installer oracle-java7-set-default git unzip
 
 	sudo sh <<EOF
@@ -35,7 +36,7 @@ ssh $SERVER <<EOF
 		wget -O- https://download.newrelic.com/548C16BF.gpg | apt-key add -
 		apt-get update
 		apt-get install newrelic-sysmond
-		#nrsysmond-config --set license_key=
+		nrsysmond-config --set license_key=$NEWRELIC_LICENSE_KEY
 		/etc/init.d/newrelic-sysmond start
 	EOF
 
@@ -63,8 +64,13 @@ ssh $SERVER <<EOF
 	sudo mv $APACHE_CONF /etc/apache2/sites-available
 	sudo a2dissite 000-default
 	sudo a2ensite $APACHE_CONF
+	sudo a2enmod rewrite
+	sudo a2enmod proxy
+	sudo a2enmod proxy_http
 	sudo service apache2 reload
 	sudo service $SERVICE_SERVER start
 
 	unzip $NEWRELIC_PKG -d $TARGET/server/newrelic
+	cd $TARGET/server/newrelic
+	mv newrelic/* .
 EOF
