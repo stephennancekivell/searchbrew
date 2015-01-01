@@ -15,3 +15,4 @@ dist
 /.settings
 elasticsearch-data
 git.repo
+.DS_Store

@@ -6,7 +6,7 @@ SERVER=new.searchbrew.com
 TARGET=/home/searchbrew
 SERVICE_SERVER=searchbrew
 INIT_SERVER_CONF=searchbrew.conf
-APACHE_CONF=searchbrew.com.conf
+NGINX_CONF=searchbrew.com
 USER=searchbrew
 NEWRELIC_PKG=newrelic-java-3.10.0.zip
 NEWRELIC_LICENSE_KEY=`cat $SCRIPT_DIR/newrelic.license.key`
@@ -29,7 +29,8 @@ ssh $SERVER <<EOF
 	# install required
 	sudo add-apt-repository ppa:webupd8team/java
 	sudo apt-get update
-	sudo apt-get -y install apache2 unattended-upgrades oracle-java7-installer oracle-java7-set-default git unzip
+	sudo apt-get -y install nginx unattended-upgrades oracle-java7-installer oracle-java7-set-default git unzip
+	#sudo dpkg-reconfigure -plow unattended-upgrades
 
 	sudo sh <<EOF
 		echo deb http://apt.newrelic.com/debian/ newrelic non-free > /etc/apt/sources.list.d/newrelic.list
@@ -56,18 +57,14 @@ ssh $USER@$SERVER <<EOF
 EOF
 
 scp $SCRIPT_DIR/$INIT_SERVER_CONF $SERVER:.
-scp $SCRIPT_DIR/$APACHE_CONF $SERVER:.
+scp $SCRIPT_DIR/$NGINX_CONF $SERVER:.
 scp $SCRIPT_DIR/$NEWRELIC_PKG $SERVER:.
 
 ssh $SERVER <<EOF
 	sudo mv $INIT_SERVER_CONF /etc/init/
-	sudo mv $APACHE_CONF /etc/apache2/sites-available
-	sudo a2dissite 000-default
-	sudo a2ensite $APACHE_CONF
-	sudo a2enmod rewrite
-	sudo a2enmod proxy
-	sudo a2enmod proxy_http
-	sudo service apache2 reload
+	sudo mv $NGINX_CONF /etc/nginx/sites-enabled
+	sudo rm /etc/nginx/sites-enabled/default
+	sudo service nginx reload
 	sudo service $SERVICE_SERVER start
 
 	unzip $NEWRELIC_PKG -d $TARGET/server/newrelic
