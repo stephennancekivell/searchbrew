@@ -14,6 +14,7 @@ app.controller('SearchCtrl', function ($scope, $http, $timeout) {
       success(function(data){
         if(data.query === $scope.searchQuery){
           $scope.loading = false;
+          resetFilter();
           $scope.searchResults = data.data;
         }
       });
@@ -28,6 +29,11 @@ app.controller('SearchCtrl', function ($scope, $http, $timeout) {
       $scope.searchResults = [];
     }
   });
+
+  function resetFilter(){
+    $scope.predicate = null;
+    $scope.reverse = null;
+  }
 
   $scope.getAll = function(){
     $scope.showAll = true;

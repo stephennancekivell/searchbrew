@@ -2,7 +2,7 @@
 
 SCRIPT_DIR=`dirname $0`
 
-SERVER=new.searchbrew.com
+SERVER=searchbrew.com
 TARGET=/home/searchbrew
 SERVICE_SERVER=searchbrew
 INIT_SERVER_CONF=searchbrew.conf
@@ -27,9 +27,9 @@ ssh $SERVER <<EOF
 	# fi
 
 	# install required
-	sudo add-apt-repository ppa:webupd8team/java
-	sudo apt-get update
-	sudo apt-get -y install nginx unattended-upgrades oracle-java7-installer oracle-java7-set-default git unzip
+	# sudo add-apt-repository ppa:webupd8team/java
+	# sudo apt-get update
+	# sudo apt-get -y install nginx unattended-upgrades oracle-java7-installer oracle-java7-set-default git unzip
 	#sudo dpkg-reconfigure -plow unattended-upgrades
 
 	sudo sh <<EOF

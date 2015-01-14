@@ -108,6 +108,13 @@
             float:right;
         }
 
+        .info {
+            margin: 50px auto;
+            max-width: 600px;
+            font-size: 16px;
+            text-align: center;
+        }
+
     </style>
 
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
@@ -129,7 +136,7 @@
         <div class="jumbotron" no-ng-hide="showAll">
             <h1>Search Brew</h1>
             <p class="lead">The missing search for <a href="http://brew.sh">Homebrew</a></p>
-            <input type="text" class="input-xlarge search-query" ng-model="searchQuery"/>
+            <input type="text" class="input-xlarge search-query" ng-model="searchQuery" autofocus placeholder="find packages"/>
             <button ng-click="getAll()" class="btn-link">All</button>
         </div>
 
@@ -156,6 +163,10 @@
             </table>
             <div ng-show="searchResults.length==0 && searchQuery.length > 0 && !loading"><p>No Results</p></div>
             <div ng-show="loading"><p>loading</p></div>
+        </div>
+
+        <div ng-hide="searchQuery" class="info">
+            <p>When you search homebrew with <code>brew search</code> it only filters the name of the package. This website searches the description as well. Much thanks to <a href="https://github.com/telemachus/homebrew-desc">@telemachus/homebrew-desc</a> for the descriptions.</p>
         </div>
 
     </div>
