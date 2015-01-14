@@ -3,14 +3,10 @@
 <html>
 <head>
     <title>Search Brew</title>
-    <link rel="stylesheet" media="screen" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css">
     <link rel="shortcut icon" href="#" />
 
     <style type="text/css">
-
-        body {
-
-        }
 
         /* Custom container */
         .container {
@@ -133,7 +129,7 @@
 <body ng-app="searchbrew">
 <div id="wrap">
     <div ng-controller="SearchCtrl" class="container">
-        <div class="jumbotron" no-ng-hide="showAll">
+        <div class="jumbotron">
             <h1>Search Brew</h1>
             <p class="lead">The missing search for <a href="http://brew.sh">Homebrew</a></p>
             <input type="text" class="input-xlarge search-query" ng-model="searchQuery" autofocus placeholder="find packages"/>
