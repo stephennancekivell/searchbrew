@@ -19,8 +19,7 @@ object FormulaDescriptionProducer extends GitRepoSupport {
   val repoName = "homebrew-desc"
 
   def getDescs = {
-    val file = new File(repoDir, "homebrew-desc/brew-desc.rb")
-    val sc = Source.fromFile(new File(repoDir, "homebrew-desc/brew-desc.rb"), "UTF-8")
+    val sc = Source.fromFile(new File(repoDir, "homebrew-desc/cmd/brew-desc.rb"), "UTF-8")
     val descs = sc.getLines().
       toList.
       filter(_.contains("=>")).
