@@ -40,9 +40,6 @@ ssh $SERVER <<EOF
 		nrsysmond-config --set license_key=$NEWRELIC_LICENSE_KEY
 		/etc/init.d/newrelic-sysmond start
 	EOF
-
-	sudo a2enmod proxy_http
-	sudo a2enmod rewrite
 EOF
 
 ssh $USER@$SERVER <<EOF
