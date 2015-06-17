@@ -12,7 +12,7 @@ NEWRELIC_PKG=newrelic-java-3.10.0.zip
 NEWRELIC_LICENSE_KEY=`cat $SCRIPT_DIR/newrelic.license.key`
 
 cd $SCRIPT_DIR/../server
-#sbt clean stage
+sbt clean stage
 cd ..
 
 ssh $SERVER <<EOF
@@ -32,14 +32,14 @@ ssh $SERVER <<EOF
 	# sudo apt-get -y install nginx unattended-upgrades oracle-java7-installer oracle-java7-set-default git unzip
 	#sudo dpkg-reconfigure -plow unattended-upgrades
 
-	sudo sh <<EOF
-		echo deb http://apt.newrelic.com/debian/ newrelic non-free > /etc/apt/sources.list.d/newrelic.list
-		wget -O- https://download.newrelic.com/548C16BF.gpg | apt-key add -
-		apt-get update
-		apt-get install newrelic-sysmond
-		nrsysmond-config --set license_key=$NEWRELIC_LICENSE_KEY
-		/etc/init.d/newrelic-sysmond start
-	EOF
+	# sudo sh <<EOF
+	# 	echo deb http://apt.newrelic.com/debian/ newrelic non-free > /etc/apt/sources.list.d/newrelic.list
+	# 	wget -O- https://download.newrelic.com/548C16BF.gpg | apt-key add -
+	# 	apt-get update
+	# 	apt-get install newrelic-sysmond
+	# 	nrsysmond-config --set license_key=$NEWRELIC_LICENSE_KEY
+	# 	/etc/init.d/newrelic-sysmond start
+	# EOF
 EOF
 
 ssh $USER@$SERVER <<EOF
