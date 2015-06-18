@@ -44,4 +44,9 @@ object Application extends Controller {
     tickActor,
     "tick"
   )
+
+
+  def index2 = Action {
+    Ok(views.html.index2())
+  }
 }
