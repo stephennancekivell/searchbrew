@@ -14,7 +14,8 @@ lazy val server = (project in file("jvm")).settings(
     "com.vmunier" %% "play-scalajs-scripts" % "0.2.2",
     "org.apache.lucene" % "lucene-core" % "4.9.1",
     "org.apache.lucene" % "lucene-queryparser" % "4.9.1",
-    "org.apache.lucene" % "lucene-analyzers-common" % "4.9.1"
+    "org.apache.lucene" % "lucene-analyzers-common" % "4.9.1",
+    "org.webjars" % "react" % "0.12.2"
   ),
   unmanagedSourceDirectories in Compile += baseDirectory.value / "src" / "main" / "scala",
   unmanagedSourceDirectories in Test    += baseDirectory.value / "src" / "test" / "scala"
@@ -28,8 +29,14 @@ lazy val client = (project in file("js")).settings(
   persistLauncher in Test := false,
   sourceMapsDirectories += sharedJs.base / "..",
   libraryDependencies ++= Seq(
-    "org.scala-js" %%% "scalajs-dom" % "0.8.0"
+    "org.scala-js" %%% "scalajs-dom" % "0.8.0",
+    "com.github.japgolly.scalajs-react" %%% "core" % "0.9.0",
+    "com.github.japgolly.scalajs-react" %%% "test" % "0.9.0" % "test"
   ),
+  jsDependencies +=
+    "org.webjars" % "react" % "0.12.2" / "react-with-addons.js" commonJSName "React",
+  requiresDOM := true,
+  scalaJSStage in Test := FastOptStage,
   unmanagedSourceDirectories in Compile += baseDirectory.value / "src" / "main" / "scala"
 ).enablePlugins(ScalaJSPlugin, ScalaJSPlay).
   dependsOn(sharedJs)
