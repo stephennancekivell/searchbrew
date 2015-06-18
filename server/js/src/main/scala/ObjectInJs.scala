@@ -10,6 +10,7 @@ import org.scalajs.dom
 
 object ScalaJSExample extends js.JSApp {
   def main(): Unit = {
-    searchbrew.react.Todo.go
+    //TodoReact.go
+    searchbrew.react.Main.go
   }
 }

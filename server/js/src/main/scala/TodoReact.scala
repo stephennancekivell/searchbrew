@@ -1,16 +1,13 @@
-package searchbrew.react
+object TodoReact {
+  import japgolly.scalajs.react.vdom.prefix_<^._
+  import japgolly.scalajs.react._
+  import org.scalajs.dom.document
 
-import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react._
-
-import org.scalajs.dom.document
-
-object Main {
-  val SearchResultList = ReactComponentB[List[String]]("TodoList")
+  val TodoList = ReactComponentB[List[String]]("TodoList")
     .render(props => {
-      def createItem(itemText: String) = <.li(itemText)
-      <.ul(props map createItem)
-    })
+    def createItem(itemText: String) = <.li(itemText)
+    <.ul(props map createItem)
+  })
     .build
 
   case class State(items: List[String], text: String)
@@ -29,12 +26,12 @@ object Main {
     .backend(new Backend(_))
     .render((_,S,B) =>
     <.div(
-      <.h1("searchbrew"),
+      <.h3("TODO"),
+      TodoList(S.items),
       <.form(^.onSubmit ==> B.handleSubmit,
         <.input(^.onChange ==> B.onChange, ^.value := S.text),
         <.button("Add #", S.items.length + 1)
-      ),
-      SearchResultList(S.items)
+      )
     )
     ).buildU
 
