@@ -1,7 +1,7 @@
 package searchbrewshared
 
 case class Formula(title: String, homepage: Option[String] = None, description: Option[String] = None)
-case class SearchResult(query: Option[String], data: Seq[String])
+case class SearchResult(query: Option[String], data: Seq[Formula])
 
 object FormulaPickle {
   import upickle._

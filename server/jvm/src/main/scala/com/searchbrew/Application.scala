@@ -29,19 +29,18 @@ object Application extends Controller {
   }
 
   def searchPickle(q: Option[String]) = Action {
-    val qq = Index.query(q)
+    val data = Index.query(q).map { fd =>
+      searchbrewshared.Formula(fd.title, fd.homepage, fd.description)
+    }
 
-    val data: Seq[String] = qq.map(_.title)
-
-    import searchbrewshared.FormulaPickle
-
-    Ok(
-      FormulaPickle.w(
+    val rendered =
+      searchbrewshared.FormulaPickle.w(
           searchbrewshared.SearchResult(
           query = q,
           data = data)
         )
-    )
+
+    Ok(rendered)
   }
 
   def indexBoth {

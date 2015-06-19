@@ -7,40 +7,42 @@ import org.scalajs.dom.document
 import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
 
-import searchbrewshared.FormulaPickle
+import searchbrewshared.{FormulaPickle, SearchResult, Formula}
 
 import org.scalajs.dom.ext.{AjaxException, Ajax}
-
 
 // https://github.com/lihaoyi/scala-js-fiddle/blob/master/client/src/main/scala/fiddle/Client.scala
 
 object Main {
   
-  val SearchResultList = ReactComponentB[List[String]]("TodoList")
+  val SearchResultList = ReactComponentB[Seq[Formula]]("TodoList")
     .render(props => {
-      def createItem(itemText: String) = <.li(itemText)
+      def createItem(fd: Formula) =
+        <.li(
+          <.a(
+            ^.href :=fd.homepage,
+            fd.title
+            ),
+          <.p(fd.description)
+          )
       <.ul(props map createItem)
     })
     .build
 
-  case class State(items: List[String], query: String)
+  case class State(items: Seq[Formula], query: String)
 
   class Backend($: BackendScope[Unit, State]) {
     def onChange(e: ReactEventI) =
       $.modState(_.copy(query = e.target.value))
-    def handleSubmit(e: ReactEventI) = {
-      e.preventDefault()
-      $.modState(s => State(s.items :+ s.query, ""))
-    }
-
-    def setItems(e: ReactEventI) = {
+    
+    def search(e: ReactEventI) = {
       e.preventDefault()
 
       val query = $.state.query
 
       Ajax.get("/searchPickle?q="+query).map { resp =>
-        val li = FormulaPickle.r(resp.responseText).data
-        $.modState(s => s.copy(items = li.toList))
+        val searchResult = FormulaPickle.r(resp.responseText).data
+        $.modState(s => s.copy(items = searchResult))
       }
 
       $.modState(_.copy(query = $.state.query))
@@ -51,9 +53,9 @@ object Main {
     .initialState(State(Nil, ""))
     .backend(new Backend(_))
     .render((_,S,B) =>
-    <.div(
+    <.div(  
       <.h1("searchbrew"),
-      <.form(^.onSubmit ==> B.setItems,
+      <.form(^.onSubmit ==> B.search,
         <.input(^.onChange ==> B.onChange, ^.value := S.query),
         <.button("Add #", S.items.length + 1)
       ),
