@@ -14,16 +14,33 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 object Application extends Controller {
 
+
   implicit val fdWrites = Json.writes[Formula]
+  implicit val searchResultWrites = Json.writes[SearchResult]
 
   def search(q: Option[String]) = Action {
     Ok(
-      Json.obj(
-        "query" -> q,
-        "data" -> Json.toJson(
-          Index.query(q)
-        )
+      Json.toJson(
+      SearchResult(
+        query = q,
+        data = Index.query(q))
       )
+    )
+  }
+
+  def searchPickle(q: Option[String]) = Action {
+    val qq = Index.query(q)
+
+    val data: Seq[String] = qq.map(_.title)
+
+    import searchbrewshared.FormulaPickle
+
+    Ok(
+      FormulaPickle.w(
+          searchbrewshared.SearchResult(
+          query = q,
+          data = data)
+        )
     )
   }
 

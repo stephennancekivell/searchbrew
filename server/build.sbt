@@ -15,7 +15,8 @@ lazy val server = (project in file("jvm")).settings(
     "org.apache.lucene" % "lucene-core" % "4.9.1",
     "org.apache.lucene" % "lucene-queryparser" % "4.9.1",
     "org.apache.lucene" % "lucene-analyzers-common" % "4.9.1",
-    "org.webjars" % "react" % "0.12.2"
+    "org.webjars" % "react" % "0.12.2",
+    "com.lihaoyi" %% "upickle" % "0.2.8"
   ),
   unmanagedSourceDirectories in Compile += baseDirectory.value / "src" / "main" / "scala",
   unmanagedSourceDirectories in Test    += baseDirectory.value / "src" / "test" / "scala"
@@ -31,7 +32,8 @@ lazy val client = (project in file("js")).settings(
   libraryDependencies ++= Seq(
     "org.scala-js" %%% "scalajs-dom" % "0.8.0",
     "com.github.japgolly.scalajs-react" %%% "core" % "0.9.0",
-    "com.github.japgolly.scalajs-react" %%% "test" % "0.9.0" % "test"
+    "com.github.japgolly.scalajs-react" %%% "test" % "0.9.0" % "test",
+    "com.lihaoyi" %%% "upickle" % "0.2.8"
   ),
   jsDependencies +=
     "org.webjars" % "react" % "0.12.2" / "react-with-addons.js" commonJSName "React",
@@ -44,7 +46,10 @@ lazy val client = (project in file("js")).settings(
 lazy val shared = (crossProject.crossType(CrossType.Pure) in file("shared")).
   settings(
     scalaVersion := scalaV,
-    unmanagedSourceDirectories in Compile += baseDirectory.value / "src" / "main" / "scala"
+    unmanagedSourceDirectories in Compile += baseDirectory.value / "src" / "main" / "scala",
+    libraryDependencies ++= Seq(
+      "com.lihaoyi" %%% "upickle" % "0.2.8"
+    )
   ).
   jsConfigure(_ enablePlugins ScalaJSPlay).
   jsSettings(sourceMapsBase := baseDirectory.value / "..")
