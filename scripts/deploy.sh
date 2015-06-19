@@ -47,7 +47,7 @@ ssh $USER@$SERVER <<EOF
 	mkdir -p $TARGET/server/dist
 EOF
 
-rsync -v --recursive --exclude git.repo --delete --compress $SCRIPT_DIR/../server/target/universal/stage/ $USER@$SERVER:/$TARGET/server/dist/
+rsync -v --recursive --exclude git.repo --delete --compress $SCRIPT_DIR/../server/jvm/target/universal/stage/ $USER@$SERVER:/$TARGET/server/dist/
 
 ssh $USER@$SERVER <<EOF
 	ln -s $TARGET/logs $TARGET/server/dist
