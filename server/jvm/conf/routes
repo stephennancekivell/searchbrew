@@ -6,6 +6,8 @@
 GET        /                    controllers.Assets.at(path="/public", file="/index.html")
 GET        /main.js             controllers.Assets.at(path="/public", file="/main.js")
 
+GET         /angularIndex       com.searchbrew.Application.angularIndex
+
 GET        /search              com.searchbrew.Application.search(q: Option[String])
 GET        /searchPickle        com.searchbrew.Application.searchPickle(q: Option[String])
 

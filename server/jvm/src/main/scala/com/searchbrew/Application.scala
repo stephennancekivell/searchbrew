@@ -14,6 +14,9 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 object Application extends Controller {
 
+  def angularIndex = Action {
+    Ok(views.html.angularIndex())
+  }
 
   implicit val fdWrites = Json.writes[Formula]
   implicit val searchResultWrites = Json.writes[SearchResult]
