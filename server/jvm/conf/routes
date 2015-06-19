@@ -3,13 +3,11 @@
 # ~~~~
 
 # Home page
-GET        /                    controllers.Assets.at(path="/public", file="/index.html")
+GET        /                    com.searchbrew.Application.angularIndex
 GET        /main.js             controllers.Assets.at(path="/public", file="/main.js")
 
-GET         /angularIndex       com.searchbrew.Application.angularIndex
-
-GET        /search              com.searchbrew.Application.search(q: Option[String])
-GET        /searchPickle        com.searchbrew.Application.searchPickle(q: Option[String])
+GET        /search              com.searchbrew.JsonSearchController.search(q: Option[String])
+GET        /search.pickle       com.searchbrew.UPickleSearchController.search(q: Option[String])
 
 # Map static resources from the /public folder to the /assets URL path
 GET        /assets/*file        controllers.Assets.at(path="/public", file)

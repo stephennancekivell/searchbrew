@@ -1,8 +1,6 @@
 package com.searchbrew
 
 import akka.actor.{Actor, Props}
-import play.api._
-import play.api.libs.json.Json
 import play.api.mvc._
 
 import com.searchbrew.update._
@@ -18,32 +16,8 @@ object Application extends Controller {
     Ok(views.html.angularIndex())
   }
 
-  implicit val fdWrites = Json.writes[Formula]
-  implicit val searchResultWrites = Json.writes[SearchResult]
-
-  def search(q: Option[String]) = Action {
-    Ok(
-      Json.toJson(
-      SearchResult(
-        query = q,
-        data = Index.query(q))
-      )
-    )
-  }
-
-  def searchPickle(q: Option[String]) = Action {
-    val data = Index.query(q).map { fd =>
-      searchbrewshared.Formula(fd.title, fd.homepage, fd.description)
-    }
-
-    val rendered =
-      searchbrewshared.FormulaPickle.w(
-          searchbrewshared.SearchResult(
-          query = q,
-          data = data)
-        )
-
-    Ok(rendered)
+  def index2 = Action {
+    Ok(views.html.index2())
   }
 
   def indexBoth {
@@ -63,9 +37,4 @@ object Application extends Controller {
     tickActor,
     "tick"
   )
-
-
-  def index2 = Action {
-    Ok(views.html.index2())
-  }
 }

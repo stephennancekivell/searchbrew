@@ -49,7 +49,7 @@ object Main {
 
       val query = $.state.query
 
-      Ajax.get("/searchPickle?q="+query).map { resp =>
+      Ajax.get("/search.pickle?q="+query).map { resp =>
         val searchResult = FormulaPickle.r(resp.responseText).data
         $.modState(s => s.copy(items = searchResult))
       }
