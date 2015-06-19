@@ -18,14 +18,23 @@ object Main {
   val SearchResultList = ReactComponentB[Seq[Formula]]("TodoList")
     .render(props => {
       def createItem(fd: Formula) =
-        <.li(
-          <.a(
-            ^.href :=fd.homepage,
-            fd.title
-            ),
-          <.p(fd.description)
+        <.tr(
+          <.td(
+            <.a(
+              ^.href :=fd.homepage,
+              fd.title
+              )
+          ),
+          <.td(
+            <.p(fd.description)
+            )
           )
-      <.ul(props map createItem)
+
+      <.table(
+        <.tbody(
+          (props map createItem)
+        )
+      )
     })
     .build
 
@@ -53,11 +62,10 @@ object Main {
     .initialState(State(Nil, ""))
     .backend(new Backend(_))
     .render((_,S,B) =>
-    <.div(  
+    <.div(
       <.h1("searchbrew"),
       <.form(^.onSubmit ==> B.search,
-        <.input(^.onChange ==> B.onChange, ^.value := S.query),
-        <.button("Add #", S.items.length + 1)
+        <.input(^.onChange ==> B.onChange, ^.value := S.query)
       ),
       SearchResultList(S.items)
     )
