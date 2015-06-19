@@ -4,14 +4,11 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react._
 
 import org.scalajs.dom.document
-import scala.concurrent.Future
+import org.scalajs.dom.ext.Ajax
+
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
 
-import searchbrewshared.{FormulaPickle, SearchResult, Formula}
-
-import org.scalajs.dom.ext.{AjaxException, Ajax}
-
-// https://github.com/lihaoyi/scala-js-fiddle/blob/master/client/src/main/scala/fiddle/Client.scala
+import searchbrewshared.{FormulaPickle, Formula}
 
 object Main {
   
@@ -31,8 +28,9 @@ object Main {
           )
 
       <.table(
+        ^.`class` := "table table-hover",
         <.tbody(
-          (props map createItem)
+          props map createItem
         )
       )
     })
@@ -63,15 +61,33 @@ object Main {
     .backend(new Backend(_))
     .render((_,S,B) =>
     <.div(
-      <.h1("searchbrew"),
-      <.form(^.onSubmit ==> B.search,
-        <.input(^.onChange ==> B.onChange, ^.value := S.query)
+      <.div(
+        ^.`class` := "jumbotron",
+        <.h1("Search Brew"),
+        <.p(
+          ^.`class` := "lead",
+           "The missing search for ",
+          <.a(
+            ^.href := "http://brew.sh",
+            "Homebrew"
+          )
+        ),
+        <.form(^.onSubmit ==> B.search,
+          <.input(
+            ^.`class` := "input-xlarge search-query",
+            ^.autoFocus := true,
+            ^.placeholder := "find packages",
+            ^.`type` := "text",
+            ^.onChange ==> B.onChange,
+            ^.value := S.query
+          )
+        )
       ),
       SearchResultList(S.items)
     )
     ).buildU
 
   def go(): Unit = {
-    React.render(TodoApp(), document.body)
+    React.render(TodoApp(), document.getElementById("reactMain"))
   }
 }

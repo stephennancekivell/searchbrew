@@ -1,16 +1,8 @@
 @import play.api.Play
 
-<!DOCTYPE html>
-<html>
-<head lang="en">
-  <meta charset="UTF-8">
-  <title></title>
-</head>
-<body>
-  <h1></h1>
-  <h2>hello</h2>
+@commonIndex{
 
-
-  @playscalajs.html.scripts("client")
-</body>
-</html>
+} {
+    <div id="reactMain" class="container"></div>
+}
+@playscalajs.html.scripts("client")
