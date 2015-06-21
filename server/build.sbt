@@ -34,7 +34,8 @@ lazy val client = (project in file("js")).settings(
     "org.scala-js" %%% "scalajs-dom" % "0.8.0",
     "com.github.japgolly.scalajs-react" %%% "core" % "0.9.0",
     "com.github.japgolly.scalajs-react" %%% "test" % "0.9.0" % "test",
-    "com.lihaoyi" %%% "upickle" % "0.2.8"
+    "com.lihaoyi" %%% "upickle" % "0.2.8",
+    "com.greencatsoft" %%% "scalajs-angular" % "0.4"
   ),
   jsDependencies +=
     "org.webjars" % "react" % "0.12.2" / "react-with-addons.js" commonJSName "React",

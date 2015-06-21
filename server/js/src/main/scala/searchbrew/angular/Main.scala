@@ -1,0 +1,81 @@
+package searchbrew.angular
+
+import com.greencatsoft.angularjs.{Angular, injectable, Controller}
+import com.greencatsoft.angularjs.core.Scope
+import org.scalajs.dom.ext.Ajax
+import searchbrewshared.{FormulaPickle, Formula}
+import scala.concurrent.Future
+import scala.scalajs.js
+import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
+import js.JSConverters._
+
+trait SearchbrewScope extends Scope {
+  //var searchResults: js.Array[String] = js.native
+  var searchResults: js.Array[js.Dictionary[String]] = js.native
+
+  var searchQuery: String = js.native
+
+  var hello: String = js.native
+
+  var search: (String) => Future[Unit]
+}
+
+
+
+object SearchCtrl extends Controller {
+
+  override val name = "SearchCtrl"
+
+
+  override type ScopeType = SearchbrewScope
+
+  case class Doc(title: String)
+
+  override def initialize(scope: ScopeType): Unit = {
+    scope.searchQuery  = ""
+
+    scope.search = search
+
+    val queryWatcher = (query: Any) => {
+      query match {
+        case s: String if !s.isEmpty => search(s)
+        case _ => ()
+      }
+    }
+
+    scope.$watch("searchQuery", queryWatcher, false)
+  }
+
+  def formulaToDict(formula: Formula): js.Dictionary[String] = {
+    js.Dictionary(
+      "title" -> formula.title,
+      "homepage" -> formula.homepage.getOrElse(""),
+      "description" -> formula.description.getOrElse("")
+    )
+  }
+
+  def search(q: String): Future[Unit] = {
+    Ajax.get("/search.pickle?q="+q).map { resp =>
+      val searchResult = FormulaPickle.r(resp.responseText)
+
+      if (searchResult.query.contains(scope.searchQuery)) {
+        scope.searchResults = searchResult.data.map(formulaToDict).toJSArray
+      }
+    }
+  }
+
+
+
+
+  //scope.searchResults = js.Array(Doc("1"), Doc("2"))
+  //scope.searchQuery = "qu"
+  //scope.hello = "hello stephen"
+}
+
+object Main {
+  def main(): Unit ={
+    val module = Angular.module("searchbrew")
+
+    module.controller(SearchCtrl)
+  }
+}

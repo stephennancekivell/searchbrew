@@ -16,7 +16,11 @@ object Application extends Controller {
     Ok(views.html.angularIndex())
   }
 
-  def index2 = Action {
+  def angularIndexScala = Action {
+    Ok(views.html.angularIndexScala())
+  }
+
+  def react = Action {
     Ok(views.html.index2())
   }
 
