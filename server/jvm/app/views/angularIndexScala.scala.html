@@ -3,12 +3,14 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
     @playscalajs.html.scripts("client")
 } {
-    <div ng-app="searchbrew" ng-controller="SearchCtrl" class="container" ng-submit="search(searchQuery);">
+    <div ng-app="searchbrew" ng-controller="SearchCtrl" class="container">
         <div class="jumbotron">
-            <h1>Search Brew {{hello}}</h1>
+            <h1>Search Brew</h1>
             <p class="lead">The missing search for <a href="http://brew.sh">Homebrew</a></p>
-            <input type="text" class="input-xlarge search-query" ng-model="searchQuery" autofocus placeholder="find packages"/>
-            <button ng-click="getAll()" class="btn-link">All</button>
+            <form ng-submit="search()">
+                <input type="text" class="input-xlarge search-query" ng-model="searchQuery" autofocus placeholder="find packages"/>
+                <button type="button" ng-click="getAll()" class="btn-link">All</button>
+            </form>
         </div>
 
         <div>

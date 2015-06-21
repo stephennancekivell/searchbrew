@@ -1,49 +1,43 @@
 package searchbrew.angular
 
-import com.greencatsoft.angularjs.{Angular, injectable, Controller}
-import com.greencatsoft.angularjs.core.Scope
+import com.greencatsoft.angularjs.{inject, Angular, injectable, Controller}
+import com.greencatsoft.angularjs.core.{HttpService, Scope}
 import org.scalajs.dom.ext.Ajax
 import searchbrewshared.{FormulaPickle, Formula}
 import scala.concurrent.Future
 import scala.scalajs.js
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
 import js.JSConverters._
+import scala.scalajs.js.annotation.JSExportAll
+import scala.util.Success
 
 trait SearchbrewScope extends Scope {
-  //var searchResults: js.Array[String] = js.native
   var searchResults: js.Array[js.Dictionary[String]] = js.native
-
   var searchQuery: String = js.native
-
-  var hello: String = js.native
-
-  var search: (String) => Future[Unit]
+  var search: js.Function = js.native
 }
-
-
 
 object SearchCtrl extends Controller {
 
   override val name = "SearchCtrl"
 
-
   override type ScopeType = SearchbrewScope
 
-  case class Doc(title: String)
+  @inject
+  var http: HttpService = _
 
   override def initialize(scope: ScopeType): Unit = {
     scope.searchQuery  = ""
-
     scope.search = search
 
     val queryWatcher = (query: Any) => {
       query match {
-        case s: String if !s.isEmpty => search(s)
+        case s: String if !s.isEmpty => search()
         case _ => ()
       }
     }
 
-    scope.$watch("searchQuery", queryWatcher, false)
+    //scope.$watch("searchQuery", queryWatcher, false)
   }
 
   def formulaToDict(formula: Formula): js.Dictionary[String] = {
@@ -54,22 +48,16 @@ object SearchCtrl extends Controller {
     )
   }
 
-  def search(q: String): Future[Unit] = {
-    Ajax.get("/search.pickle?q="+q).map { resp =>
+  val search = () => {
+    Ajax.get("/search.pickle?q="+scope.searchQuery).map { resp =>
       val searchResult = FormulaPickle.r(resp.responseText)
 
       if (searchResult.query.contains(scope.searchQuery)) {
         scope.searchResults = searchResult.data.map(formulaToDict).toJSArray
+        scope.$apply()
       }
     }
   }
-
-
-
-
-  //scope.searchResults = js.Array(Doc("1"), Doc("2"))
-  //scope.searchQuery = "qu"
-  //scope.hello = "hello stephen"
 }
 
 object Main {
