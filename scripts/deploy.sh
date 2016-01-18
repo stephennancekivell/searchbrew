@@ -2,6 +2,8 @@
 
 SCRIPT_DIR=`dirname $0`
 
+## need to upgrade to java 8 before release, farrrk
+
 SERVER=searchbrew.com
 TARGET=/home/searchbrew
 SERVICE_SERVER=searchbrew
