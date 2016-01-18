@@ -62,3 +62,9 @@ lazy val sharedJs = shared.js
 
 // loads the Play project at sbt startup
 onLoad in Global := (Command.process("project server", _: State)) compose (onLoad in Global).value
+
+enablePlugins(SbtNativePackager)
+
+enablePlugins(JavaServerAppPackaging)
+
+enablePlugins(DockerPlugin)
