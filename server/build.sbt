@@ -68,3 +68,9 @@ enablePlugins(SbtNativePackager)
 enablePlugins(JavaServerAppPackaging)
 
 enablePlugins(DockerPlugin)
+
+enablePlugins(NewRelic)
+
+newrelicVersion := "3.22.0"
+
+newrelicAppName := "Searchbrew"

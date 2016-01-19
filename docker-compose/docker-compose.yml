@@ -1,0 +1,22 @@
+searchbrew:
+  image: searchbrew:0.1-SNAPSHOT
+  ports:
+    - "9000:9000"
+  environment:
+    NEW_RELIC_LICENSE_KEY: "$NEW_RELIC_LICENSE_KEY"
+cadvisor:
+  image: google/cadvisor
+  ports:
+    - "8080:8080"
+  volumes:
+    - "/:/rootfs:ro"
+    - "/var/run:/var/run:rw"
+    - "/sys:/sys:ro"
+    - "/var/lib/docker/:/var/lib/docker:ro"
+proxy:
+  build: ./proxy
+  ports:
+    - "80:80"
+  links:
+    - cadvisor:cadvisor
+    - searchbrew:searchbrew
