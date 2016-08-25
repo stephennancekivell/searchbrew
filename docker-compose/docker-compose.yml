@@ -2,8 +2,6 @@ searchbrew:
   image: searchbrew:0.1-SNAPSHOT
   ports:
     - "9000:9000"
-  environment:
-    NEW_RELIC_LICENSE_KEY: "$NEW_RELIC_LICENSE_KEY"
 cadvisor:
   image: google/cadvisor
   ports:

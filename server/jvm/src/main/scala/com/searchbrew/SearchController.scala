@@ -17,21 +17,3 @@ object JsonSearchController extends Controller {
     )
   }
 }
-
-object UPickleSearchController extends Controller {
-
-  def search(q: Option[String]) = Action {
-    val data = Index.query(q).map { fd =>
-      searchbrewshared.Formula(fd.title, fd.homepage, fd.description)
-    }
-
-    val rendered =
-      searchbrewshared.FormulaPickle.w(
-        searchbrewshared.SearchResult(
-          query = q,
-          data = data)
-      )
-
-    Ok(rendered)
-  }
-}

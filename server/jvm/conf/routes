@@ -6,14 +6,7 @@
 GET        /                     com.searchbrew.Application.angularIndex
 GET        /main.js              controllers.Assets.at(path="/public", file="/main.js")
 
-GET        /react                com.searchbrew.Application.react()
-
-GET        /angularScala         com.searchbrew.Application.angularIndexScala()
-
 GET        /search               com.searchbrew.JsonSearchController.search(q: Option[String])
-GET        /search.pickle        com.searchbrew.UPickleSearchController.search(q: Option[String])
 
 # Map static resources from the /public folder to the /assets URL path
 GET        /assets/*file         controllers.Assets.at(path="/public", file)
-
-

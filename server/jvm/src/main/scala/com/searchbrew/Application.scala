@@ -16,14 +16,6 @@ object Application extends Controller {
     Ok(views.html.angularIndex())
   }
 
-  def angularIndexScala = Action {
-    Ok(views.html.angularIndexScala())
-  }
-
-  def react = Action {
-    Ok(views.html.index2())
-  }
-
   def indexBoth {
     Index.insertHomepages(FormulaHomepageProducer.doit())
     Index.insertDescriptions(FormulaDescriptionProducer.doit())
