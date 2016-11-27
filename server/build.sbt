@@ -1,23 +1,26 @@
 name := """searchbrew"""
 
-scalaVersion := "2.11.8"
-
-resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
+scalaVersion := "2.12.0"
 
 libraryDependencies ++= Seq(
+  "com.typesafe.akka" %% "akka-http-core" % "10.0.0",
+  "com.typesafe.akka" %% "akka-http" % "10.0.0",
   "org.apache.lucene" % "lucene-core" % "4.9.1",
   "org.apache.lucene" % "lucene-queryparser" % "4.9.1",
   "org.apache.lucene" % "lucene-analyzers-common" % "4.9.1",
-  specs2 % Test
+  "org.specs2" %% "specs2" % "2.4.17" % Test
 )
 
-unmanagedSourceDirectories in Compile += baseDirectory.value / "src" / "main" / "scala"
-unmanagedSourceDirectories in Test    += baseDirectory.value / "src" / "test" / "scala"
+val circeVersion = "0.6.1"
 
-enablePlugins(PlayScala)
+libraryDependencies ++= Seq(
+  "io.circe" %% "circe-core",
+  "io.circe" %% "circe-generic",
+  "io.circe" %% "circe-parser"
+).map(_ % circeVersion)
 
-enablePlugins(SbtNativePackager)
+enablePlugins(DockerPlugin)
 
 enablePlugins(JavaServerAppPackaging)
 
-enablePlugins(DockerPlugin)
+scalacOptions in Test ++= Seq("-Yrangepos")

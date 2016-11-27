@@ -4,7 +4,6 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer
 import org.apache.lucene.document._
 import org.apache.lucene.index._
 import org.apache.lucene.queryparser.classic.QueryParser
-import org.apache.lucene.sandbox.queries.FuzzyLikeThisQuery
 import org.apache.lucene.search._
 import org.apache.lucene.store.RAMDirectory
 import org.apache.lucene.util.Version
@@ -24,26 +23,6 @@ object Index {
     writer.close()
   }
 
-  def insertHomepages(formula: Seq[Formula]): Unit = {
-    formula.foreach(insertHomepage)
-  }
-
-  def insertHomepage(formula: Formula): Unit = {
-    val found = findByTitle(formula.title).getOrElse(formula)
-
-    insert(Seq(found.copy(homepage = formula.homepage)))
-  }
-
-  def insertDescriptions(formula: Seq[Formula]): Unit = {
-    formula.foreach(insertDescription)
-  }
-
-  def insertDescription(formula: Formula): Unit = {
-    val found = findByTitle(formula.title).getOrElse(formula)
-
-    insert(Seq(found.copy(description = formula.description)))
-  }
-
   def insert(formulas: Seq[Formula]): Unit = {
     val config = new IndexWriterConfig(Version.LUCENE_4_9, analyzer)
     val writer = new IndexWriter(index, config)
@@ -52,7 +31,7 @@ object Index {
       updateDoc(f.title, formulaToDocument(f), writer)
     }
 
-    writer.close
+    writer.close()
   }
 
   def updateDoc(title: String, doc: Document, writer: IndexWriter): Unit = {
@@ -74,8 +53,8 @@ object Index {
     val d = doc.get("description")
 
     Formula(title,
-      if(h == null) None else Some(h),
-      if(d == null) None else Some(d)
+      Option(h),
+      Option(d)
     )
   }
 
@@ -85,13 +64,12 @@ object Index {
 
     doc.add(new TextField("title", formula.title, Field.Store.YES))
 
-    formula.homepage.map { homepage =>
+    formula.homepage.foreach { homepage =>
       doc.add(new TextField("homepage", homepage, Field.Store.YES))
     }
 
-    formula.description.map { description =>
+    formula.description.foreach { description =>
       doc.add(new TextField("description", description, Field.Store.YES))
-
     }
 
     doc
