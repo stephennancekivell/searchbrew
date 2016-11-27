@@ -127,6 +127,6 @@ case class SearchResponse(query: String, data: Seq[Formula])
 object AppConfig {
   object http {
     val interface = "0.0.0.0"
-    val port = 8080
+    val port = 9000
   }
 }
