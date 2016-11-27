@@ -17,8 +17,17 @@ object Application extends Controller {
   }
 
   def indexBoth {
-    Index.insertHomepages(FormulaHomepageProducer.doit())
-    Index.insertDescriptions(FormulaDescriptionProducer.doit())
+    val findHomes = timing("findhome") { FormulaHomepageProducer.doit() }
+    val bigString = findHomes.map(f => Seq(f.title, f.description, f.homepage).mkString(",")).mkString("|")
+    println("big string "+bigString.length)
+    timing("index home") { Index.insert(findHomes) }
+  }
+
+  def timing[A](msg: String)(fn: => A): A = {
+    val start = System.currentTimeMillis()
+    val re = fn
+    println(msg+s" took ${System.currentTimeMillis() - start}ms")
+    re
   }
 
   val tickActor = Akka.system.actorOf(Props(new Actor {
