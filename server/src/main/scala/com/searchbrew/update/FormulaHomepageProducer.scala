@@ -22,7 +22,7 @@ object FormulaHomepageProducer extends GitRepoSupport {
     files.map(fileToFormula)
   }
 
-  def fileToFormula(file: File) = {
+  private def fileToFormula(file: File) = {
     val source = Source.fromFile(file)("UTF8")
     val lines = source.getLines().toList
     val name = file.getName.replaceFirst(".rb$", "")
