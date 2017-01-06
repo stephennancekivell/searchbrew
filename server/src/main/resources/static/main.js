@@ -2,9 +2,13 @@
 
 var app = angular.module('searchbrew', []);
 
-app.controller('SearchCtrl', function ($scope, $http, $timeout) {
+app.controller('SearchCtrl', function ($scope, $http, $timeout, $location) {
   $scope.showAll = false;
   $scope.loading = false;
+
+  if ($location.search().q) {
+    $scope.searchQuery = $location.search().q;
+  }
 
   function doSearch(){
     if (!$scope.searchQuery) return;
