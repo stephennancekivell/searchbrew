@@ -8,6 +8,9 @@ import org.apache.lucene.search._
 import org.apache.lucene.store.RAMDirectory
 import org.apache.lucene.util.Version
 
+import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
+import io.circe._, io.circe.generic.auto._, io.circe.parser._, io.circe.syntax._
+
 object Index {
 
   val analyzer = new StandardAnalyzer(Version.LUCENE_4_9)

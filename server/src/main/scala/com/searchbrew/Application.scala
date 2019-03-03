@@ -16,8 +16,8 @@ import scala.io.Source
 
 import scala.concurrent.duration._
 
-import io.circe.generic.auto._
-import de.heikoseeberger.akkahttpcirce.CirceSupport.circeToEntityMarshaller
+import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
+import io.circe._, io.circe.generic.auto._, io.circe.parser._, io.circe.syntax._
 
 object Application extends scala.App {
 
@@ -25,11 +25,14 @@ object Application extends scala.App {
   implicit val materializer = ActorMaterializer()
   implicit val executionContext = system.dispatcher
 
-  def indexBoth {
-    val findHomes = timing("findhome") { FormulaHomepageProducer.doit() }
-    val bigString = findHomes.map(f => Seq(f.title, f.description, f.homepage).mkString(",")).mkString("|")
-    println("big string "+bigString.length)
-    timing("index home") { Index.insert(findHomes) }
+  def indexBoth: Unit = {
+    val start = System.currentTimeMillis()
+    FormulaHomepageProducer.doit().foreach { findHomes =>
+      println(s"find took ${System.currentTimeMillis() - start}")
+      val bigString = findHomes.map(f => Seq(f.title, f.description, f.homepage).mkString(",")).mkString("|")
+      println("big string "+bigString.length)
+      timing("index home") { Index.insert(findHomes) }
+    }
   }
 
   def timing[A](msg: String)(fn: => A): A = {
@@ -75,7 +78,8 @@ object Application extends scala.App {
       get {
         parameters("q".? ) { q =>
           val found = Index.query(q)
-          complete(SearchResponse(q.getOrElse(""), found))
+          val model = SearchResponse(q.getOrElse(""), found)
+          complete(model.asJson)
         }
       }
     } ~

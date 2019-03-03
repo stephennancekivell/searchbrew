@@ -1,42 +1,37 @@
 package com.searchbrew.update
 
-import java.io.File
-
 import com.searchbrew.Formula
-import scala.io.Source
+import akka.actor.ActorSystem
+import akka.http.scaladsl.Http
+import akka.http.scaladsl.model._
+import akka.http.scaladsl.unmarshalling.Unmarshal
+import akka.stream.ActorMaterializer
 
-object FormulaHomepageProducer extends GitRepoSupport {
+import scala.concurrent.Future
+import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
+import io.circe._, io.circe.generic.auto._, io.circe.parser._, io.circe.syntax._
 
-  def doit(): Seq[Formula] = {
-    gitUpdate
-    parse
-  }
+object FormulaHomepageProducer {
+  private val url = "https://formulae.brew.sh/api/formula.json"
 
-  val repoName = "homebrew-core"
-  val repoUrl = "https://github.com/Homebrew/homebrew-core.git"
+  private case class FormulaDto(name: String, desc: Option[String], homepage: Option[String])
 
-  def parse: Seq[Formula] = {
-    val files = new File(repoDir, "homebrew-core/Formula").listFiles()
-    println(s"$repoName found ${files.length} files")
+  def doit()(implicit actorSystem: ActorSystem, actorMaterializer: ActorMaterializer): Future[Seq[Formula]] = {
+    import actorSystem.dispatcher
+    Http().singleRequest(HttpRequest(uri = url)).flatMap { resp =>
+      resp.entity.getDataBytes()
 
-    files.map(fileToFormula)
-  }
+      Unmarshal(resp).to[List[FormulaDto]]
+    }.map { dtos =>
+      println(s"found ${dtos.length} dtos")
+        dtos.map { dto =>
+          Formula(
+            title = dto.name,
+            description = dto.desc,
+            homepage = dto.homepage
+          )
+        }
 
-  private def fileToFormula(file: File) = {
-    val source = Source.fromFile(file)("UTF8")
-    val lines = source.getLines().toList
-    val name = file.getName.replaceFirst(".rb$", "")
-
-    val homepage = lines.find(line => line.trim.startsWith("homepage")).map(line => {
-      line.replaceFirst("homepage", "").replaceAll("'", "").replaceAll("\"", "").trim
-    })
-
-    val desc = lines.find(line => line.trim.startsWith("desc")).map(line => {
-      line.replaceFirst("desc", "").replaceAll("''", "").replaceAll("\"", "").trim
-    })
-
-    source.close()
-
-    Formula(name, homepage = homepage, description = desc)
+    }
   }
 }
