@@ -1,7 +1,7 @@
 version: '2'
 services: 
   searchbrew:
-    image: searchbrew:0.1-SNAPSHOT
+    image: searchbrew:0.1.0-SNAPSHOT
     ports:
       - "9000:9000"
   cadvisor:

@@ -24,3 +24,5 @@ enablePlugins(DockerPlugin)
 enablePlugins(JavaServerAppPackaging)
 
 scalacOptions in Test ++= Seq("-Yrangepos")
+
+dockerExposedPorts += 9000

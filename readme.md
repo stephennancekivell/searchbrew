@@ -8,8 +8,9 @@ The missing search for homebrew.
 ## publish
 
 ```
+eval $(docker-machine env searchbrew)
 cd server
 sbt docker:publishLocal
-cd ..
+cd ../docker-compose
 docker-compose up -d
 ```
