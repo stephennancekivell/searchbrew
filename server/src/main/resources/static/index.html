@@ -96,12 +96,12 @@
         line-height:1.4
         }
 
-        #footer div p {
-        display: inline;
+        .foot-container {
+        display: flex;
+        justify-content: center;
         }
-        #twitter-link {
-        margin-top:5px;
-        float:right;
+        .foot-link {
+            padding: 0 0.5rem;
         }
 
         .info {
@@ -174,12 +174,12 @@
 </div>
 
 <div id="footer">
-    <div class="container">
-        <p class="text-muted">See on github: <a href="http://github.com/stephennancekivell/searchbrew" target="_blank">stephennancekivell/searchbrew</a></p>
-        <div id="twitter-link">
-            <a href="https://twitter.com/intent/tweet?button_hashtag=searchbrew&text=%40StephenNanceki" class="twitter-hashtag-button">Tweet #searchbrew</a>
-            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-        </div>
+    <div class="container foot-container">
+        <p>
+            <span class="foot-link">on github: <a href="https://github.com/stephennancekivell/searchbrew" target="_blank">stephennancekivell/searchbrew</a></span>
+            <span class="foot-link">built by: <a href="https://stephenn.com" target="_blank">Stephen Nancekivell</a></span>
+            <span class="foot-link"><a href="https://twitter.com/StephenNancekiv"> @ twitter</a></span>
+        </p>
     </div>
 </div>
 
